@@ -1,18 +1,28 @@
 import { useState } from "react";
 
+import { webpVariant } from "@/lib/image";
 import { cn } from "@/lib/utils";
 
 /**
  * Product photography with explicit intrinsic dimensions.
  *
- * The image files themselves are not in the repo (see docs/IMAGE_AUDIT.md), so
- * this component is deliberately defensive:
+ * Every photo shipped in `public/images/` is present twice: a `.jpg` and a
+ * `.webp` derivative of the same crop (see docs/IMAGE_AUDIT.md). This renders a
+ * `<picture>` so browsers that accept WebP take the lighter file — typically
+ * 40–70% fewer bytes — while everything else falls back to the JPEG. The `src`
+ * prop therefore stays the canonical `.jpg` path and the WebP is derived, so no
+ * caller has to know or care about the second file.
+ *
+ * Guarantees kept deliberately:
  *  - width/height are always set, so the layout box is reserved and CLS is 0
  *    whether or not the file resolves;
  *  - if the source 404s we render a warm, branded placeholder instead of a
  *    broken-image icon;
- *  - alt text is always meaningful and describes the *product*, never "image".
+ *  - alt text is always meaningful and describes the *product*, never "image";
+ *  - `priority` is the only thing that makes an image eager, and only the hero
+ *    and first row ever pass it, so offscreen photos stay lazy.
  */
+
 export function ProductImage({
   src,
   alt,
@@ -34,27 +44,36 @@ export function ProductImage({
   sizes?: string;
 }) {
   const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
+  const webp = webpVariant(src);
 
   return (
     <div className={cn("relative overflow-hidden bg-cream-2", className)}>
+      {/* `<picture>` must be sized like the <img> it wraps, otherwise the
+          img's `h-full`/`w-full` resolve against an inline, shrink-to-fit box
+          and the photo collapses. */}
       {state !== "error" ? (
-        <img
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          sizes={sizes}
-          loading={priority ? "eager" : "lazy"}
-          decoding={priority ? "sync" : "async"}
-          fetchPriority={priority ? "high" : "auto"}
-          onLoad={() => setState("loaded")}
-          onError={() => setState("error")}
-          className={cn(
-            "h-full w-full object-cover transition-opacity duration-500",
-            state === "loaded" ? "opacity-100" : "opacity-0",
-            imgClassName,
-          )}
-        />
+        <picture className="block h-full w-full">
+          {webp ? <source srcSet={webp} type="image/webp" sizes={sizes} /> : null}
+          <img
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            sizes={sizes}
+            loading={priority ? "eager" : "lazy"}
+            decoding={priority ? "sync" : "async"}
+            fetchPriority={priority ? "high" : "auto"}
+            onLoad={() => setState("loaded")}
+            onError={() => setState("error")}
+            className={cn(
+              "h-full w-full object-cover transition-[opacity,transform] duration-500",
+              state === "loaded" ? "opacity-100" : "opacity-0",
+              // Hold the hover zoom back until the photo has loaded, otherwise the
+              // fade-in and the scale animate together and read as a glitch.
+              state === "loaded" ? imgClassName : "scale-100",
+            )}
+          />
+        </picture>
       ) : null}
 
       {state !== "loaded" ? (

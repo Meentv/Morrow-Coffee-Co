@@ -23,6 +23,11 @@
    * and 4.49:1 on cream-2. Used for eyebrow labels and the menu "category" text.
    */
   --color-gold-ink: #94601f;
+  /* Focus ring. `gold` is only 2.87:1 on paper and 2.71:1 on cream, which fails
+     the 3:1 non-text contrast requirement for a focus indicator (WCAG 1.4.11).
+     This darker gold clears 3:1 on every surface in the palette, including
+     espresso and espresso-2 where the decorative gold lives. */
+  --color-focus: #b0722a;
 
   /* --- Derived, contrast-checked --- */
   --color-muted: rgba(42, 28, 21, 0.62);
@@ -140,7 +145,7 @@
 
   /* Single, consistent, high-contrast focus ring for every interactive element. */
   :focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 2px solid var(--color-focus);
     outline-offset: 3px;
     border-radius: 4px;
   }

@@ -97,18 +97,23 @@ export default function HomePage() {
               <figure className="relative m-0 aspect-[4/4.6] overflow-hidden rounded-card-lg shadow-card max-[899px]:aspect-[4/3.4]">
                 <ProductImage
                   src="/images/coffee-hero.jpg"
-                  alt="Latte in a cream cup on a warm coffee shop table"
-                  width={920}
-                  height={1060}
+                  alt="Honey oat latte in a cream cup on a warm coffee shop table"
+                  width={768}
+                  height={883}
                   priority
                   className="h-full w-full"
                   sizes="(max-width: 900px) 92vw, 46vw"
                 />
 
-                {/* 3D layer — sits inside the same frame, above the photo, with a
-                    warm scrim so the hero text is never compromised. */}
+                {/* 3D layer. The photo already contains a latte in the lower
+                    half, so a second cup sitting on top of it reads as a
+                    mistake. Instead the 3D cup sits in the blurred upper-right
+                    corner and deliberately breaks the frame edge, which keeps
+                    the composition legible and still complements the hero.
+                    It is hidden on narrow screens where it would crowd the
+                    photo, and the still-photo treatment carries the hero. */}
                 <Suspense fallback={null}>
-                  <HeroCupScene className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%] [&>div]:pointer-events-auto" />
+                  <HeroCupScene className="pointer-events-none absolute -top-[4%] -right-[9%] hidden h-[42%] w-[52%] min-[900px]:block [&>div]:pointer-events-auto" />
                 </Suspense>
               </figure>
 
@@ -180,9 +185,9 @@ export default function HomePage() {
             <div className="overflow-hidden rounded-card shadow-card-soft">
               <ProductImage
                 src="/images/open-kitchen-evening.jpg"
-                alt="Morrow Coffee Co. warm interior"
-                width={900}
-                height={700}
+                alt="Sunlit Morrow Coffee Co. room with brass pendant lights, plants and a full pastry counter"
+                width={1000}
+                height={750}
                 className="h-full max-h-[480px] min-h-[340px] w-full"
                 sizes="(max-width: 900px) 92vw, 46vw"
               />
@@ -246,9 +251,9 @@ export default function HomePage() {
               <article className="relative min-h-[470px] overflow-hidden rounded-card shadow-card-soft max-[899px]:min-h-[420px]">
                 <ProductImage
                   src="/images/chef-portrait-aya.jpg"
-                  alt="Morrow barista preparing coffee in the kitchen"
-                  width={900}
-                  height={900}
+                  alt="Morrow barista pouring latte art at the espresso machine"
+                  width={1000}
+                  height={750}
                   className="absolute inset-0 h-full w-full"
                   sizes="(max-width: 900px) 92vw, 55vw"
                 />

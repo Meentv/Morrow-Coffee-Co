@@ -11,13 +11,13 @@ byte-for-byte in [`legacy/vanilla/`](./legacy/vanilla) for reference.
 
 ## 1. Project overview
 
-| | |
-|---|---|
-| **Brand** | Morrow Coffee Co. — coffee · food · good company |
-| **Pages** | 5 (Home, Menu, Kitchen, Order, Enquire) + 404 |
-| **Design language** | Warm editorial: espresso brown, cream, muted gold, Inter + Fraunces italic |
-| **Status** | Front-end complete. Form submissions run against a **mock service layer** (demo mode) until a backend URL is supplied. |
-| **Live site** | _placeholder — not yet deployed_ |
+|                     |                                                                                                                        |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **Brand**           | Morrow Coffee Co. — coffee · food · good company                                                                       |
+| **Pages**           | 5 (Home, Menu, Kitchen, Order, Enquire) + 404                                                                          |
+| **Design language** | Warm editorial: espresso brown, cream, muted gold, Inter + Fraunces italic                                             |
+| **Status**          | Front-end complete. Form submissions run against a **mock service layer** (demo mode) until a backend URL is supplied. |
+| **Live site**       | _placeholder — not yet deployed_                                                                                       |
 
 ### What it does
 
@@ -43,6 +43,10 @@ npm run dev
 ```
 
 Save to `docs/screenshots/{name}-{desktop|mobile}.png` and reference them here.
+
+> All real photography **is** now in the repo (`public/images/`), so a browser
+> capture will show the finished design. The only thing still missing here is the
+> capture itself.
 
 > The same constraint applies to Lighthouse: no scores are quoted in this README
 > because none were measured. §12 explains how to run Lighthouse yourself.
@@ -74,6 +78,7 @@ Tailwind CSS 4.3 (via `@tailwindcss/vite`, tokens in `@theme`)
 (reading 'edgesOut')` — a plain `npm install` fails before any code runs. This
 combination installs cleanly with no `--legacy-peer-deps` flag. Everything else
 is on its latest stable major.
+
 </details>
 
 ---
@@ -125,20 +130,20 @@ legacy/vanilla/           the untouched original site
 
 ## 5. Feature list
 
-| Area | Detail |
-|---|---|
-| Routing | 5 routes + 404, all lazy-loaded via `React.lazy` + `Suspense` |
-| Menu | Typed data, category filter (`aria-pressed`), search over name/description/category, `?cat=` and `?q=` URL state, empty state with reset, result counter, `/` keyboard shortcut for search |
-| Cart | Add/remove/increment/decrement, integer cents, `localStorage` persistence under the **original** `morrow-cart` key with legacy migration, cross-tab sync, 99-per-line / 50-line caps |
-| Order | Empty-cart block, delivery-address rule, full line-item payload (ids, quantities, unit + line totals, currency), double-submit guard, basket cleared only on success |
-| Kitchen | 5-field private-chef enquiry, email-or-phone union validation |
-| Contact | Enquiry form, phone/email links, 4-item FAQ |
-| FAQ | `aria-expanded`/`aria-controls`, measured-height animation, keyboard operable |
-| Newsletter | Zod email validation, loading/success/error, honest demo notice |
-| Toasts | success/error/info, deduped, capped stack, auto-dismiss, dismiss button, single `aria-live="polite"` region |
-| 3D | Procedural lathe cup + croissant, slow auto-rotation, pointer parallax, DPR capped at 2, offscreen/tab-hidden pause, SVG poster while loading, WebGL detection, `prefers-reduced-motion` |
-| A11y | Skip link, landmarks, one `h1`/page, 4.5:1 text contrast, visible focus rings, labelled fields, modal focus trap + restore, reduced-motion support |
-| SEO | Per-route title/description/OG/Twitter, `noindex` on 404, canonical only when a real origin is configured |
+| Area       | Detail                                                                                                                                                                                     |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Routing    | 5 routes + 404, all lazy-loaded via `React.lazy` + `Suspense`                                                                                                                              |
+| Menu       | Typed data, category filter (`aria-pressed`), search over name/description/category, `?cat=` and `?q=` URL state, empty state with reset, result counter, `/` keyboard shortcut for search |
+| Cart       | Add/remove/increment/decrement, integer cents, `localStorage` persistence under the **original** `morrow-cart` key with legacy migration, cross-tab sync, 99-per-line / 50-line caps       |
+| Order      | Empty-cart block, delivery-address rule, full line-item payload (ids, quantities, unit + line totals, currency), double-submit guard, basket cleared only on success                       |
+| Kitchen    | 5-field private-chef enquiry, email-or-phone union validation                                                                                                                              |
+| Contact    | Enquiry form, phone/email links, 4-item FAQ                                                                                                                                                |
+| FAQ        | `aria-expanded`/`aria-controls`, measured-height animation, keyboard operable                                                                                                              |
+| Newsletter | Zod email validation, loading/success/error, honest demo notice                                                                                                                            |
+| Toasts     | success/error/info, deduped, capped stack, auto-dismiss, dismiss button, single `aria-live="polite"` region                                                                                |
+| 3D         | Procedural lathe cup + croissant, slow auto-rotation, pointer parallax, DPR capped at 2, offscreen/tab-hidden pause, SVG poster while loading, WebGL detection, `prefers-reduced-motion`   |
+| A11y       | Skip link, landmarks, one `h1`/page, 4.5:1 text contrast, visible focus rings, labelled fields, modal focus trap + restore, reduced-motion support                                         |
+| SEO        | Per-route title/description/OG/Twitter, `noindex` on 404, canonical only when a real origin is configured                                                                                  |
 
 ---
 
@@ -189,11 +194,11 @@ Current results (actually run — see §18):
 
 ## 10. Environment variables
 
-| Variable | Required | Purpose |
-|---|---|---|
-| `VITE_SITE_URL` | recommended | Public origin, no trailing slash. Enables canonical URLs + absolute OG images. Unset ⇒ canonical is **omitted** rather than pointing at a fake domain. |
-| `VITE_API_BASE_URL` | for real submissions | Base URL of the form backend. Unset ⇒ **demo mode**. |
-| `VITE_ANALYTICS_ID` | optional | Reserved, not wired up. |
+| Variable            | Required             | Purpose                                                                                                                                                |
+| ------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `VITE_SITE_URL`     | recommended          | Public origin, no trailing slash. Enables canonical URLs + absolute OG images. Unset ⇒ canonical is **omitted** rather than pointing at a fake domain. |
+| `VITE_API_BASE_URL` | for real submissions | Base URL of the form backend. Unset ⇒ **demo mode**.                                                                                                   |
+| `VITE_ANALYTICS_ID` | optional             | Reserved, not wired up.                                                                                                                                |
 
 Only `VITE_`-prefixed values reach the browser. **Never** put a secret in one.
 
@@ -227,9 +232,9 @@ and there are no licence questions.
 
 To swap in GLB models, place them at exactly:
 
-| File | Used by |
-|---|---|
-| `public/models/morrow-cup.glb` | homepage hero cup |
+| File                                 | Used by           |
+| ------------------------------------ | ----------------- |
+| `public/models/morrow-cup.glb`       | homepage hero cup |
 | `public/models/morrow-croissant.glb` | croissant preview |
 
 Constraints: ≤ 1.5 MB, Draco or Meshopt compressed, CC0 or commercially
@@ -242,8 +247,12 @@ licensed, +Y up, ~1 unit tall, origin at the base. Full details in
 - **Fonts**: Inter © The Inter Project Authors, Fraunces © Undercase Type — both
   SIL Open Font License 1.1, self-hosted via `@fontsource-variable`.
 - **Three.js**: MIT. **React**: MIT. **Tailwind CSS**: MIT. **Motion**: MIT.
-- **Photography**: not included. See [`docs/IMAGE_AUDIT.md`](./docs/IMAGE_AUDIT.md) —
-  every original photo is missing from the repository.
+- **Photography**: 20 photographs supplied by the site owner, cropped and
+  optimised into 23 files (JPEG + WebP). Provenance, watermarks and the two
+  outstanding product mismatches are documented in
+  [`docs/IMAGE_AUDIT.md`](./docs/IMAGE_AUDIT.md). **9 of the 20 source frames
+  carry a visible stock-site watermark** and should be replaced with licensed or
+  original photography before launch.
 - **3D models**: none bundled (procedural only).
 
 ## 14. Important architectural decisions
@@ -252,7 +261,7 @@ licensed, +Y up, ~1 unit tall, origin at the base. Full details in
    the only formatter; `parseAmountToCents` refuses a third decimal rather than
    rounding silently.
 2. **The reveal/hover bug is fixed structurally.** The original put the
-   scroll-reveal `transform` and the `:hover` lift on the *same* element; equal
+   scroll-reveal `transform` and the `:hover` lift on the _same_ element; equal
    specificity plus cascade order meant the lift never fired. Reveal now lives on
    a wrapper, the lift on the card. A regression test asserts they stay separated.
 3. **One submission boundary.** All four forms call `submitForm(kind, payload)`.
@@ -279,8 +288,12 @@ licensed, +Y up, ~1 unit tall, origin at the base. Full details in
 
 See the delivery report for the full list. In short:
 
-- **All 22 original photographs are missing** from the repo; 2 product cards show
-  the wrong image in the original design and are flagged, not fake-fixed.
+- **Photography is preview-grade.** All 23 delivered images derive from the 20
+  photographs supplied on 2026-11-17, but 9 source frames carry a visible
+  "dreamstime" watermark, and 2 product cards still show a photo of the wrong
+  product ("Vanilla Cloud" is a matcha drink, "Burnt Honey Cake" is a pastry
+  tray). Both are flagged in the UI with a "photo pending" badge and listed for
+  replacement in `docs/IMAGE_AUDIT.md` rather than silently re-captioned.
 - **Forms submit to a mock.** No email, CRM or kitchen printer is connected.
 - **No E2E run** in this environment (no browser available).
 - **No Lighthouse measurement** — targets were not verified.
@@ -294,9 +307,11 @@ See the delivery report for the full list. In short:
 ## 16. Project docs
 
 - [`docs/MIGRATION.md`](./docs/MIGRATION.md) — page/section/component mapping, every
-  original interaction, all 12 bug fixes, and the token translation table.
-- [`docs/IMAGE_AUDIT.md`](./docs/IMAGE_AUDIT.md) — all 22 image references, alt text,
-  mismatches, and the replacement list.
+  original interaction, all 18 documented bug fixes (12 from the migration,
+  6 from the photo/polish pass), and the token translation table.
+- [`docs/IMAGE_AUDIT.md`](./docs/IMAGE_AUDIT.md) — the 23 delivered files with true
+  dimensions and weights, which upload each one came from, the watermark
+  disclosure, the crop decisions, and the replacement list.
 - [`legacy/vanilla/`](./legacy/vanilla) — the original site, untouched.
 
 ---

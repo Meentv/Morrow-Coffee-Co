@@ -90,7 +90,7 @@ export function MenuFilterBar({
             onChange={(event) => onQueryChange(event.target.value)}
             placeholder="Search the menu"
             autoComplete="off"
-            className="w-full min-w-[220px] rounded-full border border-line bg-white py-2.5 pr-4 pl-10 text-[13px] text-espresso transition-colors outline-none placeholder:text-espresso/40 focus:border-gold focus:ring-[3px] focus:ring-gold/15 sm:w-auto"
+            className="w-full min-w-[220px] rounded-full border border-line bg-white py-2.5 pr-4 pl-10 text-[13px] text-espresso transition-colors outline-none placeholder:text-espresso/65 focus:border-gold focus:ring-[3px] focus:ring-gold/15 sm:w-auto"
           />
         </div>
       </div>

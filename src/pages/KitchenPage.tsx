@@ -30,28 +30,28 @@ const SERVICES = [
 
 const GALLERY = [
   {
-    src: "/images/barista-chef-cooking-coffee-kitchen-prof-1.jpg",
-    alt: "Morrow barista at the espresso station",
+    src: "/images/gallery-first-pour.jpg",
+    alt: "Barista pouring milk into a cup at the espresso station",
     caption: "First pour",
   },
   {
-    src: "/images/barista-chef-cooking-coffee-kitchen-prof-2.jpg",
-    alt: "Chef plating in the Morrow kitchen",
+    src: "/images/gallery-the-pass.jpg",
+    alt: "The service counter, with the pastry case and heat lamps",
     caption: "The pass",
   },
   {
-    src: "/images/barista-chef-cooking-coffee-kitchen-prof-3.jpg",
-    alt: "Barista steaming milk for a latte",
+    src: "/images/gallery-milk-and-steam.jpg",
+    alt: "Espresso pulling into two small cups on the machine",
     caption: "Milk & steam",
   },
   {
-    src: "/images/barista-chef-cooking-coffee-kitchen-prof-4.jpg",
-    alt: "Kitchen team preparing service",
+    src: "/images/gallery-service.jpg",
+    alt: "Barista grinding coffee and tamping a shot",
     caption: "Service",
   },
   {
-    src: "/images/barista-chef-cooking-coffee-kitchen-prof-5.jpg",
-    alt: "Chef finishing a plate at Morrow",
+    src: "/images/gallery-finishing-touch.jpg",
+    alt: "Warm pendant lights over the counter at closing time",
     caption: "Finishing touch",
   },
 ] as const;
@@ -91,7 +91,7 @@ export default function KitchenPage() {
             <div className="overflow-hidden rounded-card shadow-card-soft">
               <ProductImage
                 src="/images/chef-portrait-eli.jpg"
-                alt="Morrow chef pouring coffee at an espresso bar"
+                alt="Morrow chef plating a dish in the open kitchen"
                 width={900}
                 height={700}
                 className="h-full max-h-[480px] min-h-[340px] w-full"
@@ -134,8 +134,8 @@ export default function KitchenPage() {
         <Reveal>
           <div className="h-[clamp(260px,38vw,380px)] overflow-hidden rounded-card">
             <ProductImage
-              src="/images/open-kitchen-evening.jpg"
-              alt="Morrow open kitchen in the evening"
+              src="/images/kitchen-banner.jpg"
+              alt="Guests at the marble tables while a barista works the espresso bar"
               width={1400}
               height={560}
               className="h-full w-full"

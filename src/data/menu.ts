@@ -7,12 +7,11 @@ import type { MenuItem } from "@/features/menu/types";
  * Prices were floats in the original (`data-price="5.50"`); they are now
  * integer cents (`550`) so all arithmetic stays exact.
  *
- * IMAGE NOTE — every `image` path below is a path the *original site*
- * referenced. The repository that was handed over contains no image files
- * at all, so each of these is currently unresolved. Intrinsic width/height
- * are the layout box the original CSS used (4:3 menu media), which is what
- * matters for reserving space; replace with the true pixel size of the real
- * photo when you drop it in. See docs/IMAGE_AUDIT.md.
+ * IMAGE NOTE — every `image` path below resolves to a real file in
+ * `public/images/`. `width`/`height` are the true pixel dimensions of that
+ * file, so the browser reserves the exact layout box and CLS stays at 0.
+ * Files are 4:3 for menu cards except where noted. Provenance, cropping and
+ * the two remaining product mismatches are documented in docs/IMAGE_AUDIT.md.
  */
 export const MENU_ITEMS: readonly MenuItem[] = [
   {
@@ -20,10 +19,10 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     name: "Honey Oat Latte",
     category: "coffee",
     priceCents: 550,
-    image: "/images/coffee-hero.jpg",
-    width: 800,
-    height: 600,
-    alt: "Honey oat latte in a cream ceramic cup",
+    image: "/images/honey-oat-latte.jpg",
+    width: 768,
+    height: 576,
+    alt: "Honey oat latte with swirled latte art in a cream ceramic cup",
     description: "Silky espresso, oat milk, and a little wildflower honey.",
     featured: true,
     badge: "house favourite",
@@ -34,9 +33,9 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     category: "coffee",
     priceCents: 325,
     image: "/images/house-filter.jpg",
-    width: 800,
-    height: 600,
-    alt: "House filter coffee beside a pastry",
+    width: 560,
+    height: 420,
+    alt: "House filter coffee in a white cup, seen from above, beside a croissant",
     description: "Clean, bright, and brewed for the long conversation.",
     featured: true,
   },
@@ -45,10 +44,10 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     name: "Cardamom Cortado",
     category: "coffee",
     priceCents: 475,
-    image: "/images/specialty-coffee-latte-cup-cafe-warm-cre-2.jpg",
+    image: "/images/cardamom-cortado.jpg",
     width: 800,
     height: 600,
-    alt: "Cardamom cortado in a warm ceramic cup",
+    alt: "Cardamom cortado in a warm ceramic cup on a marble counter",
     description: "Short, silky, and finished with a warm spice note.",
   },
   {
@@ -56,10 +55,10 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     name: "Maple Cappuccino",
     category: "coffee",
     priceCents: 500,
-    image: "/images/specialty-coffee-latte-cup-cafe-warm-cre-4.jpg",
-    width: 800,
-    height: 600,
-    alt: "Maple cappuccino with latte art",
+    image: "/images/maple-cappuccino.jpg",
+    width: 600,
+    height: 450,
+    alt: "Maple cappuccino with latte art in a cream cup",
     description: "Double espresso, steamed milk, and a soft maple finish.",
   },
   {
@@ -67,10 +66,10 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     name: "Orange Cold Brew",
     category: "cold",
     priceCents: 525,
-    image: "/images/iced-coffee.jpg",
-    width: 800,
-    height: 600,
-    alt: "Iced coffee with caramel foam",
+    image: "/images/orange-cold-brew.jpg",
+    width: 768,
+    height: 576,
+    alt: "Iced coffee with caramel-coloured foam in a tall glass",
     description: "Slow-steeped coffee, orange peel, and a clean finish.",
   },
   {
@@ -78,15 +77,15 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     name: "Vanilla Cloud",
     category: "cold",
     priceCents: 500,
-    image: "/images/matcha-cloud.jpg",
-    width: 800,
-    height: 600,
-    alt: "Vanilla cloud — cold milk, vanilla bean, and a light espresso float",
+    image: "/images/vanilla-cloud.jpg",
+    width: 768,
+    height: 576,
+    alt: "Iced matcha latte in a tall glass",
     description: "Cold milk, vanilla bean, and a light espresso float.",
-    // BUG (original): this card displayed images/matcha-cloud.jpg, a matcha latte,
-    // while advertising a vanilla/espresso drink. Alt text and image disagreed.
-    // The genuine photo is missing, so the mismatch cannot be silently fixed —
-    // see docs/IMAGE_AUDIT.md#missing-images for the required replacement.
+    // STILL MISMATCHED: the only cold-drink photo supplied is a green matcha
+    // latte, which is not this product. The alt text now describes the photo
+    // honestly instead of the product, and the card shows a "photo pending"
+    // badge. Replacement needed — see docs/IMAGE_AUDIT.md.
     imageMismatch: true,
   },
   {
@@ -94,10 +93,10 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     name: "Salted Caramel Cold Brew",
     category: "cold",
     priceCents: 575,
-    image: "/images/cold-brew.jpg",
-    width: 800,
-    height: 600,
-    alt: "Salted caramel cold brew with soft cream",
+    image: "/images/salted-caramel-cold-brew.jpg",
+    width: 768,
+    height: 576,
+    alt: "Salted caramel cold brew with soft cream and a caramel drizzle",
     description: "Slow coffee, soft cream, and a little sea salt.",
   },
   {
@@ -105,10 +104,10 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     name: "Morning Toast",
     category: "kitchen",
     priceCents: 850,
-    image: "/images/brunch-plate.jpg",
-    width: 800,
-    height: 600,
-    alt: "Morning toast and seasonal brunch plate",
+    image: "/images/morning-toast.jpg",
+    width: 1000,
+    height: 750,
+    alt: "Avocado toast and poached eggs on a brunch plate by the window",
     description: "Sourdough, whipped ricotta, jam, and cracked pepper.",
     featured: true,
     badge: "new",
@@ -118,10 +117,10 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     name: "Kitchen Breakfast",
     category: "kitchen",
     priceCents: 1200,
-    image: "/images/barista-kitchen.jpg",
-    width: 800,
-    height: 600,
-    alt: "Chef preparing a seasonal breakfast plate",
+    image: "/images/kitchen-breakfast.jpg",
+    width: 1000,
+    height: 750,
+    alt: "Chef plating a seasonal breakfast dish in the Morrow kitchen",
     description: "Eggs, greens, sourdough, and today's seasonal extra.",
   },
   {
@@ -129,10 +128,10 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     name: "Butter Croissant",
     category: "bakery",
     priceCents: 380,
-    image: "/images/pastry-counter.jpg",
-    width: 800,
-    height: 600,
-    alt: "Fresh pastries at the bakery counter",
+    image: "/images/butter-croissant.jpg",
+    width: 520,
+    height: 390,
+    alt: "Butter croissant beside a cup of coffee on a grey plate",
     description: "Flaky, warm, and baked before the first pour.",
     featured: true,
     badge: "fresh daily",
@@ -142,13 +141,14 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     name: "Burnt Honey Cake",
     category: "bakery",
     priceCents: 625,
-    image: "/images/cinnamon-roll.jpg",
-    width: 800,
-    height: 600,
-    alt: "Fresh cinnamon roll with icing",
+    image: "/images/burnt-honey-cake.jpg",
+    width: 588,
+    height: 441,
+    alt: "Pastries cooling on a bakery rack",
     description: "Soft crumb, dark honey, and a little sea salt.",
-    // BUG (original): a cinnamon-roll photo on a card for Burnt Honey Cake.
-    // Documented, not silently re-captioned. See docs/IMAGE_AUDIT.md.
+    // STILL MISMATCHED: the closest supplied photo is a tray of pastries, not a
+    // slice of burnt honey cake. Flagged rather than silently re-captioned.
+    // See docs/IMAGE_AUDIT.md.
     imageMismatch: true,
   },
   {
@@ -156,10 +156,10 @@ export const MENU_ITEMS: readonly MenuItem[] = [
     name: "Seasonal Danish",
     category: "bakery",
     priceCents: 425,
-    image: "/images/coffee-pastries-croissant-bakery-breakfa-4.jpg",
-    width: 800,
-    height: 600,
-    alt: "Seasonal danish pastry",
+    image: "/images/seasonal-danish.jpg",
+    width: 328,
+    height: 240,
+    alt: "Seasonal danish pastries on a bakery tray",
     description: "Buttery pastry with whatever fruit looks best today.",
   },
 ] as const;
