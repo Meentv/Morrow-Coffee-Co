@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Morrow Coffee Co.">
+  <rect width="64" height="64" rx="16" fill="#2a1c15"/>
+  <text x="32" y="44" font-family="Georgia, 'Times New Roman', serif" font-size="36"
+        font-weight="700" fill="#c98a45" text-anchor="middle">M</text>
+</svg>
