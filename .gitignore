@@ -28,3 +28,6 @@ npm-debug.log*
 # Misc
 .cache/
 .temp/
+
+# TypeScript incremental build info
+*.tsbuildinfo
