@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Order from Morrow Coffee Co. — pickup or local delivery, made fresh to request."
+    />
+    <title>Order — Morrow Coffee Co.</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232a1c15'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' font-weight='700' fill='%23c98a45' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script type="module" src="assets/js/main.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="index.html"
+          ><span class="brand-mark">M</span><span>Morrow<span>.</span></span></a
+        >
+        <nav class="nav-links" id="navLinks">
+          <a href="index.html">Home</a><a href="menu.html">Menu</a
+          ><a href="kitchen.html">Kitchen</a><a href="contact.html">Enquire</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="cart-wrap" href="order.html" aria-label="Open order"
+            ><span class="nav-icon" aria-hidden="true">🛒</span
+            ><span class="cart-count">0</span></a
+          ><button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Toggle menu"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="page-hero">
+        <div class="container page-hero-grid">
+          <div>
+            <span class="eyebrow"><i></i> pickup · delivery · made now</span>
+            <h1>Let us make<br />you <em>something.</em></h1>
+          </div>
+          <p>
+            Choose pickup or delivery, tell us when you want it, and we’ll get
+            the kitchen moving.
+          </p>
+        </div>
+      </section>
+      <section id="details">
+        <div class="container split-1">
+          <form class="form-card" id="orderForm">
+            <span class="eyebrow">order details</span>
+            <h2 style="margin: 12px 0 4px; font-size: clamp(28px, 4vw, 36px)">
+              Where should we<br />send the good stuff?
+            </h2>
+            <div class="form-grid">
+              <div class="field">
+                <label>First name</label
+                ><input required placeholder="Your name" />
+              </div>
+              <div class="field">
+                <label>Phone</label><input required placeholder="+234 ..." />
+              </div>
+              <div class="field">
+                <label>Order type</label>
+                <select>
+                  <option>Pickup from Morrow</option>
+                  <option>Local delivery</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>When</label>
+                <select>
+                  <option>As soon as possible</option>
+                  <option>In 30 minutes</option>
+                  <option>Schedule for later</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label>Address or pickup note</label
+                ><input placeholder="Where should we meet you?" />
+              </div>
+              <div class="field full">
+                <label>Anything else?</label
+                ><textarea
+                  placeholder="Milk preference, allergies, a note for the kitchen..."
+                ></textarea>
+              </div>
+            </div>
+            <button class="button primary" type="submit">
+              Place request <span>↗</span>
+            </button>
+            <div class="form-status"></div>
+          </form>
+          <aside class="order-side">
+            <span class="eyebrow">your basket</span>
+            <h3>Ready when<br />you are.</h3>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-total">
+              <span>Total</span><b id="cartTotal">$0.00</b>
+            </div>
+            <a class="button soft" href="menu.html"
+              >Add more from menu <span>+</span></a
+            >
+            <p
+              class="muted"
+              style="margin-top: 22px; font-size: 12px; line-height: 1.7"
+            >
+              Orders are prepared fresh. We’ll confirm the final timing by phone
+              or email.
+            </p>
+          </aside>
+        </div>
+      </section>
+      <section class="cream-section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">make it a gathering</span>
+              <h2>
+                Need a chef<br /><span class="gradient-text">with that?</span>
+              </h2>
+            </div>
+            <p>
+              For office breakfasts, birthdays, launches, or any table you want
+              to make memorable.
+            </p>
+          </div>
+          <div class="promo-strip">
+            <div>
+              <span class="eyebrow" style="color: var(--gold)"
+                >Morrow kitchen</span
+              >
+              <h3>Order a private coffee chef.</h3>
+              <p>We bring the bar, the menu, and the calm.</p>
+            </div>
+            <a class="button" href="kitchen.html"
+              >Book the kitchen <span>↗</span></a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div
+          class="footer-bottom"
+          style="margin-top: 0; border: 0; padding-top: 0"
+        >
+          <span>© 2025 Morrow Coffee Co.</span
+          ><span><a href="menu.html">Back to menu →</a></span>
+        </div>
+      </div>
+    </footer>
+    <div class="toast" id="toast" role="status"></div>
+  </body>
+</html>

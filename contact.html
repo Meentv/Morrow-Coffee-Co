@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Contact Morrow Coffee Co. — visit, enquire, book private events, or ask about wholesale."
+    />
+    <title>Contact — Morrow Coffee Co.</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232a1c15'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' font-weight='700' fill='%23c98a45' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script type="module" src="assets/js/main.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="index.html"
+          ><span class="brand-mark">M</span><span>Morrow<span>.</span></span></a
+        >
+        <nav class="nav-links" id="navLinks">
+          <a href="index.html">Home</a><a href="menu.html">Menu</a
+          ><a href="kitchen.html">Kitchen</a
+          ><a class="active" href="contact.html">Enquire</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="button primary" href="order.html"
+            >Order now <span>↗</span></a
+          ><a class="cart-wrap" href="order.html" aria-label="Open order"
+            ><span class="nav-icon" aria-hidden="true">🛒</span
+            ><span class="cart-count">0</span></a
+          ><button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Toggle menu"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="page-hero">
+        <div class="container page-hero-grid">
+          <div>
+            <span class="eyebrow"><i></i> come say hello</span>
+            <h1>There’s always<br />room for <em>one more.</em></h1>
+          </div>
+          <p>
+            Questions about a booking, a big order, or where to find us? We’re
+            listening.
+          </p>
+        </div>
+      </section>
+      <section>
+        <div class="container split-08">
+          <div>
+            <span class="eyebrow">find us here</span>
+            <h2 style="margin: 15px 0 20px">
+              Come for<br />the <span class="gradient-text">coffee.</span>
+            </h2>
+            <div class="story-list" style="grid-template-columns: 1fr">
+              <span><b>Address</b> 14 Morrow Lane, somewhere warm</span
+              ><span><b>Hours</b> Monday–Sunday · 7am–8pm</span
+              ><span><b>Phone</b> +1 234 567 890</span
+              ><span><b>Email</b> hello@morrowcoffee.co</span>
+            </div>
+            <p class="muted" style="font-size: 13px; line-height: 1.8">
+              We welcome walk-ins, quiet laptop mornings, and long tables. For
+              groups of 8+, please send an enquiry before arriving.
+            </p>
+          </div>
+          <form class="form-card" id="enquiryForm">
+            <span class="eyebrow">send an enquiry</span>
+            <h3 style="margin: 11px 0 4px; font-size: 28px">
+              What can we help with?
+            </h3>
+            <div class="form-grid">
+              <div class="field">
+                <label>Name</label><input required placeholder="Your name" />
+              </div>
+              <div class="field">
+                <label>Email</label
+                ><input required type="email" placeholder="you@email.com" />
+              </div>
+              <div class="field full">
+                <label>Topic</label>
+                <select>
+                  <option>General question</option>
+                  <option>Private event</option>
+                  <option>Wholesale coffee</option>
+                  <option>Feedback</option>
+                  <option>Partnership</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label>Message</label
+                ><textarea
+                  required
+                  placeholder="Tell us what's on your mind..."
+                ></textarea>
+              </div>
+            </div>
+            <button class="button primary" type="submit">
+              Send enquiry <span>↗</span>
+            </button>
+            <div class="form-status"></div>
+          </form>
+        </div>
+      </section>
+      <section class="cream-section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">answers, for now</span>
+              <h2>Frequently<br /><span class="gradient-text">asked.</span></h2>
+            </div>
+            <p>Still curious? Send the enquiry — a human will reply.</p>
+          </div>
+          <div class="faq">
+            <div class="faq-item">
+              <button class="faq-question">
+                <span>Do you take bookings?</span><span>+</span>
+              </button>
+              <div class="faq-answer">
+                For groups of eight or more, yes. Send us your date and guest
+                count and we’ll find the best table or kitchen option.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">
+                <span>Can I order for delivery?</span><span>+</span>
+              </button>
+              <div class="faq-answer">
+                Yes. Start an order from the menu and choose local delivery at
+                checkout. We’ll confirm your delivery time.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">
+                <span>Can Morrow cater an event?</span><span>+</span>
+              </button>
+              <div class="faq-answer">
+                We can bring a coffee bar, a breakfast table, or a full evening
+                kitchen to your event. Visit the Kitchen page to send a request.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">
+                <span>Do you sell beans wholesale?</span><span>+</span>
+              </button>
+              <div class="faq-answer">
+                We do. Send a wholesale enquiry with your location, volume, and
+                the kind of coffee experience you want to build.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div
+          class="footer-bottom"
+          style="margin-top: 0; border: 0; padding-top: 0"
+        >
+          <span>© 2025 Morrow Coffee Co.</span
+          ><span>Made slowly. Served warmly.</span>
+        </div>
+      </div>
+    </footer>
+    <div class="toast" id="toast" role="status"></div>
+  </body>
+</html>

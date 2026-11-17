@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="The Morrow Coffee Co. menu — coffee, cold drinks, kitchen plates, and bakery, made to order."
+    />
+    <title>Menu — Morrow Coffee Co.</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232a1c15'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' font-weight='700' fill='%23c98a45' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script type="module" src="assets/js/main.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="index.html"
+          ><span class="brand-mark">M</span><span>Morrow<span>.</span></span></a
+        >
+        <nav class="nav-links" id="navLinks">
+          <a href="index.html">Home</a
+          ><a class="active" href="menu.html">Menu</a
+          ><a href="kitchen.html">Kitchen</a><a href="contact.html">Enquire</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="button primary" href="order.html"
+            >Order now <span>↗</span></a
+          ><a class="cart-wrap" href="order.html" aria-label="Open order"
+            ><span class="nav-icon" aria-hidden="true">🛒</span
+            ><span class="cart-count">0</span></a
+          ><button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Toggle menu"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="page-hero">
+        <div class="container page-hero-grid">
+          <div>
+            <span class="eyebrow"><i></i> menu / made today</span>
+            <h1>Take your<br /><em>pick.</em></h1>
+          </div>
+          <p>
+            From a quick flat white to a long, slow breakfast — every item is
+            made to order and served with care.
+          </p>
+        </div>
+      </section>
+      <section>
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">the menu</span>
+              <h2>Choose a good one.</h2>
+            </div>
+            <span class="muted mono" id="menuResults">12 items</span>
+          </div>
+          <div class="filter-row">
+            <button class="filter active" data-filter="all">Everything</button
+            ><button class="filter" data-filter="coffee">Coffee</button
+            ><button class="filter" data-filter="cold">Cold drinks</button
+            ><button class="filter" data-filter="kitchen">Kitchen</button
+            ><button class="filter" data-filter="bakery">Bakery</button
+            ><input
+              id="menuSearch"
+              type="search"
+              placeholder="Search the menu"
+              aria-label="Search the menu"
+            />
+          </div>
+          <div class="product-layout">
+            <div class="product-list">
+              <article class="menu-card" data-menu-category="coffee">
+                <div class="menu-media">
+                  <img
+                    src="images/coffee-hero.jpg"
+                    alt="Honey oat latte"
+                  />
+                </div>
+                <div class="menu-body">
+                  <span class="menu-type">coffee</span>
+                  <h3>Honey Oat Latte</h3>
+                  <p>Silky espresso, oat milk, and wildflower honey.</p>
+                  <div class="menu-bottom">
+                    <span class="price">$5.50</span
+                    ><button
+                      class="add-button"
+                      data-add-to-cart
+                      data-name="Honey Oat Latte"
+                      data-price="5.50"
+                      aria-label="Add Honey Oat Latte"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="menu-card" data-menu-category="coffee">
+                <div class="menu-media">
+                  <img
+                    src="images/house-filter.jpg"
+                    alt="House filter coffee beside a pastry"
+                  />
+                </div>
+                <div class="menu-body">
+                  <span class="menu-type">coffee</span>
+                  <h3>House Filter</h3>
+                  <p>Clean, bright, and brewed for the long conversation.</p>
+                  <div class="menu-bottom">
+                    <span class="price">$3.25</span
+                    ><button
+                      class="add-button"
+                      data-add-to-cart
+                      data-name="House Filter"
+                      data-price="3.25"
+                      aria-label="Add House Filter"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="menu-card" data-menu-category="coffee">
+                <div class="menu-media">
+                  <img
+                    src="images/specialty-coffee-latte-cup-cafe-warm-cre-2.jpg"
+                    alt="Cardamom cortado in a warm ceramic cup"
+                  />
+                </div>
+                <div class="menu-body">
+                  <span class="menu-type">coffee</span>
+                  <h3>Cardamom Cortado</h3>
+                  <p>Short, silky, and finished with a warm spice note.</p>
+                  <div class="menu-bottom">
+                    <span class="price">$4.75</span
+                    ><button
+                      class="add-button"
+                      data-add-to-cart
+                      data-name="Cardamom Cortado"
+                      data-price="4.75"
+                      aria-label="Add Cardamom Cortado"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="menu-card" data-menu-category="cold">
+                <div class="menu-media">
+                  <img
+                    src="images/iced-coffee.jpg"
+                    alt="Iced coffee with caramel foam"
+                  />
+                </div>
+                <div class="menu-body">
+                  <span class="menu-type">cold drinks</span>
+                  <h3>Orange Cold Brew</h3>
+                  <p>Slow-steeped coffee, orange peel, and a clean finish.</p>
+                  <div class="menu-bottom">
+                    <span class="price">$5.25</span
+                    ><button
+                      class="add-button"
+                      data-add-to-cart
+                      data-name="Orange Cold Brew"
+                      data-price="5.25"
+                      aria-label="Add Orange Cold Brew"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="menu-card" data-menu-category="cold">
+                <div class="menu-media">
+                  <img
+                    src="images/matcha-cloud.jpg"
+                    alt="Iced matcha latte"
+                  />
+                </div>
+                <div class="menu-body">
+                  <span class="menu-type">cold drinks</span>
+                  <h3>Vanilla Cloud</h3>
+                  <p>Cold milk, vanilla bean, and a light espresso float.</p>
+                  <div class="menu-bottom">
+                    <span class="price">$5.00</span
+                    ><button
+                      class="add-button"
+                      data-add-to-cart
+                      data-name="Vanilla Cloud"
+                      data-price="5.00"
+                      aria-label="Add Vanilla Cloud"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="menu-card" data-menu-category="kitchen">
+                <div class="menu-media">
+                  <img
+                    src="images/brunch-plate.jpg"
+                    alt="Morning toast and seasonal brunch plate"
+                  />
+                </div>
+                <div class="menu-body">
+                  <span class="menu-type">kitchen</span>
+                  <h3>Morning Toast</h3>
+                  <p>Sourdough, whipped ricotta, jam, and cracked pepper.</p>
+                  <div class="menu-bottom">
+                    <span class="price">$8.50</span
+                    ><button
+                      class="add-button"
+                      data-add-to-cart
+                      data-name="Morning Toast"
+                      data-price="8.50"
+                      aria-label="Add Morning Toast"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="menu-card" data-menu-category="kitchen">
+                <div class="menu-media">
+                  <img
+                    src="images/barista-kitchen.jpg"
+                    alt="Chef preparing a seasonal breakfast plate"
+                  />
+                </div>
+                <div class="menu-body">
+                  <span class="menu-type">kitchen</span>
+                  <h3>Kitchen Breakfast</h3>
+                  <p>Eggs, greens, sourdough, and today's seasonal extra.</p>
+                  <div class="menu-bottom">
+                    <span class="price">$12.00</span
+                    ><button
+                      class="add-button"
+                      data-add-to-cart
+                      data-name="Kitchen Breakfast"
+                      data-price="12.00"
+                      aria-label="Add Kitchen Breakfast"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="menu-card" data-menu-category="bakery">
+                <div class="menu-media">
+                  <img
+                    src="images/pastry-counter.jpg"
+                    alt="Fresh pastries at the bakery counter"
+                  />
+                </div>
+                <div class="menu-body">
+                  <span class="menu-type">bakery</span>
+                  <h3>Butter Croissant</h3>
+                  <p>Flaky, warm, and baked before the first pour.</p>
+                  <div class="menu-bottom">
+                    <span class="price">$3.80</span
+                    ><button
+                      class="add-button"
+                      data-add-to-cart
+                      data-name="Butter Croissant"
+                      data-price="3.80"
+                      aria-label="Add Butter Croissant"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="menu-card" data-menu-category="bakery">
+                <div class="menu-media">
+                  <img
+                    src="images/cinnamon-roll.jpg"
+                    alt="Fresh cinnamon roll with icing"
+                  />
+                </div>
+                <div class="menu-body">
+                  <span class="menu-type">bakery</span>
+                  <h3>Burnt Honey Cake</h3>
+                  <p>Soft crumb, dark honey, and a little sea salt.</p>
+                  <div class="menu-bottom">
+                    <span class="price">$6.25</span
+                    ><button
+                      class="add-button"
+                      data-add-to-cart
+                      data-name="Burnt Honey Cake"
+                      data-price="6.25"
+                      aria-label="Add Burnt Honey Cake"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="menu-card" data-menu-category="coffee">
+                <div class="menu-media">
+                  <img
+                    src="images/specialty-coffee-latte-cup-cafe-warm-cre-4.jpg"
+                    alt="Maple cappuccino with latte art"
+                  />
+                </div>
+                <div class="menu-body">
+                  <span class="menu-type">coffee</span>
+                  <h3>Maple Cappuccino</h3>
+                  <p>Double espresso, steamed milk, and a soft maple finish.</p>
+                  <div class="menu-bottom">
+                    <span class="price">$5.00</span
+                    ><button
+                      class="add-button"
+                      data-add-to-cart
+                      data-name="Maple Cappuccino"
+                      data-price="5.00"
+                      aria-label="Add Maple Cappuccino"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="menu-card" data-menu-category="cold">
+                <div class="menu-media">
+                  <img
+                    src="images/cold-brew.jpg"
+                    alt="Salted caramel cold brew"
+                  />
+                </div>
+                <div class="menu-body">
+                  <span class="menu-type">cold drinks</span>
+                  <h3>Salted Caramel Cold Brew</h3>
+                  <p>Slow coffee, soft cream, and a little sea salt.</p>
+                  <div class="menu-bottom">
+                    <span class="price">$5.75</span
+                    ><button
+                      class="add-button"
+                      data-add-to-cart
+                      data-name="Salted Caramel Cold Brew"
+                      data-price="5.75"
+                      aria-label="Add Salted Caramel Cold Brew"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="menu-card" data-menu-category="bakery">
+                <div class="menu-media">
+                  <img
+                    src="images/coffee-pastries-croissant-bakery-breakfa-4.jpg"
+                    alt="Seasonal danish pastry"
+                  />
+                </div>
+                <div class="menu-body">
+                  <span class="menu-type">bakery</span>
+                  <h3>Seasonal Danish</h3>
+                  <p>Buttery pastry with whatever fruit looks best today.</p>
+                  <div class="menu-bottom">
+                    <span class="price">$4.25</span
+                    ><button
+                      class="add-button"
+                      data-add-to-cart
+                      data-name="Seasonal Danish"
+                      data-price="4.25"
+                      aria-label="Add Seasonal Danish"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <aside class="order-side">
+              <span class="eyebrow">your order</span>
+              <h3>A little table<br />for later.</h3>
+              <div class="cart-items" id="cartItems"></div>
+              <div class="cart-total">
+                <span>Total</span><b id="cartTotal">$0.00</b>
+              </div>
+              <button class="button primary" id="checkoutButton">
+                Continue order <span>→</span>
+              </button>
+              <p class="muted" style="font-size: 11px; margin: 13px 0 0">
+                Pickup and delivery options available at checkout.
+              </p>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a class="brand" href="index.html"
+              ><span class="brand-mark">M</span
+              ><span>Morrow<span>.</span></span></a
+            >
+            <p>Good coffee, thoughtful food, and a room worth returning to.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Explore</h4>
+            <a href="index.html">Home</a><a href="kitchen.html">Kitchen</a
+            ><a href="contact.html">Contact</a>
+          </div>
+          <div class="footer-col">
+            <h4>Menu</h4>
+            <a href="menu.html">Coffee</a><a href="menu.html">Kitchen</a
+            ><a href="menu.html">Bakery</a>
+          </div>
+          <div class="footer-col">
+            <h4>Order</h4>
+            <a href="order.html">Pickup</a><a href="order.html">Delivery</a
+            ><a href="kitchen.html">Book a chef</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2025 Morrow Coffee Co.</span
+          ><span>Made slowly. Served warmly.</span>
+        </div>
+      </div>
+    </footer>
+    <div class="toast" id="toast" role="status"></div>
+  </body>
+</html>
