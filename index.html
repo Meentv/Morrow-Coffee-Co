@@ -14,6 +14,26 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#2a1c15" />
 
+    <!-- Static social defaults so crawlers that never execute JavaScript still
+         get a real preview card. <Seo /> replaces these per route at runtime.
+         og:url/canonical are omitted here on purpose: without a real domain
+         (VITE_SITE_URL) inventing one would be worse than leaving it out. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Morrow Coffee Co." />
+    <meta property="og:title" content="Morrow Coffee Co. — Good coffee, made human" />
+    <meta
+      property="og:description"
+      content="Warm coffee, thoughtful food, and a kitchen worth gathering around."
+    />
+    <meta property="og:image" content="/images/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="The sunlit Morrow Coffee Co. room with its brass pendant lights and pastry counter"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <!-- Fonts are self-hosted via @fontsource-variable (see src/main.tsx) —
          no third-party font request, no FOUT from a blocked CDN. -->
 

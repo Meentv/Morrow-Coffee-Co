@@ -14,8 +14,8 @@ export const SITE = {
     "Morrow Coffee Co. — warm coffee, thoughtful food, and a kitchen worth gathering around.",
   /** Placeholder until the real domain is supplied. */
   url: (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/$/, "") ?? "",
-  /** Placeholder OG image — see docs/IMAGE_AUDIT.md. */
-  ogImage: "/images/coffee-hero.jpg",
+  /** 1200×630 share card, cropped from a supplied photo. See docs/IMAGE_AUDIT.md. */
+  ogImage: "/images/og-image.jpg",
   locale: "en_US",
   twitterHandle: "",
 } as const;

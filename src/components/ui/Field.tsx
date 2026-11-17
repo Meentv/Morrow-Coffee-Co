@@ -32,7 +32,7 @@ type FieldShellProps = {
 };
 
 const CONTROL_CLASSES =
-  "w-full rounded-xl border border-line bg-[#fbf8f3] px-[15px] py-[13px] text-espresso text-sm outline-none transition-[border-color,background-color,box-shadow] duration-200 placeholder:text-espresso/40 focus:border-gold focus:bg-white focus:ring-[3px] focus:ring-gold/15 aria-[invalid=true]:border-danger aria-[invalid=true]:bg-danger/4";
+  "w-full rounded-xl border border-line bg-[#fbf8f3] px-[15px] py-[13px] text-espresso text-sm outline-none transition-[border-color,background-color,box-shadow] duration-200 placeholder:text-espresso/65 focus:border-gold focus:bg-white focus:ring-[3px] focus:ring-gold/15 aria-[invalid=true]:border-danger aria-[invalid=true]:bg-danger/4";
 
 function FieldShell({
   id,
@@ -60,7 +60,7 @@ function FieldShell({
             *
           </span>
         ) : (
-          <span className="ml-1.5 text-[10px] font-medium tracking-normal text-muted-strong/70 normal-case">
+          <span className="ml-1.5 text-[10px] font-medium tracking-normal text-muted-strong normal-case">
             (optional)
           </span>
         )}

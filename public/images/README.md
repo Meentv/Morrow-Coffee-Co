@@ -1,21 +1,14 @@
 # Photography
 
-**This folder is empty in the repository as handed over.** The original five
-HTML pages referenced 20 distinct `.jpg` files under `images/`, but none of
-those files existed in the repo or anywhere in its Git history.
+23 delivered image files, derived from the 20 photographs supplied on
+2026-11-17. Every photo ships as a JPEG plus a WebP derivative of the same crop;
+`ProductImage.tsx` prefers the WebP and falls back to the JPEG.
 
-Every `<img>` in the app therefore has an explicit `onError` fallback (a warm
-"Photo coming soon" placeholder) instead of a broken-image icon — but the site
-will look unfinished until the real photos are dropped in here.
+Do not add outside stock imagery to this folder. If a file needs replacing,
+replace it with photography of the actual product or place, and update
+`docs/IMAGE_AUDIT.md` and the `width`/`height` in `src/data/menu.ts` at the same
+time.
 
-`docs/IMAGE_AUDIT.md` lists every expected filename, the product or section it
-belongs to, the alt text in use, and which two cards currently have a
-**mismatched** photo (the original site showed a matcha drink on the "Vanilla
-Cloud" card, and a cinnamon roll on the "Burnt Honey Cake" card).
-
-Drop files in with the exact names listed in that audit and they appear
-immediately — no code changes needed.
-
-Recommended: export at 2× the display size, `.jpg` (or add `.webp` siblings and
-note it here so the audit can be updated), quality ~80, and keep each file under
-250 KB.
+**Preview-grade, not final:** 9 of the source frames carry a visible
+"dreamstime" watermark, and two product cards show a photo of the wrong product.
+See `docs/IMAGE_AUDIT.md` §3 and §4 for the exact replacement list.

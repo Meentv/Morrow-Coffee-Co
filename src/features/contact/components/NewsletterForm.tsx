@@ -87,7 +87,7 @@ export function NewsletterForm() {
             aria-invalid={errors.email ? true : undefined}
             aria-describedby={errors.email ? "newsletter-email-error" : undefined}
             className={cn(
-              "w-full rounded-full border border-transparent px-[17px] py-[13px] text-sm text-espresso transition-shadow duration-200 outline-none placeholder:text-espresso/45",
+              "w-full rounded-full border border-transparent px-[17px] py-[13px] text-sm text-espresso transition-shadow duration-200 outline-none placeholder:text-espresso/65",
               "bg-white/94 focus:ring-[3px] focus:ring-gold/35",
               errors.email && "bg-danger/10 ring-2 ring-danger/60",
             )}
@@ -120,7 +120,7 @@ export function NewsletterForm() {
       ) : null}
 
       {isDemoMode() ? (
-        <p className="mt-2.5 text-[10.5px] text-cream/45">
+        <p className="mt-2.5 text-[10.5px] text-cream/60">
           Demo — no mailing list is connected yet.
         </p>
       ) : null}
