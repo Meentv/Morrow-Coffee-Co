@@ -19,7 +19,16 @@ import { cn } from "@/lib/utils";
  * reset, and an inline error that is announced. The success copy is honest
  * about demo mode.
  */
-export function NewsletterForm() {
+/**
+ * Two placements, one implementation.
+ *
+ * `panel` is the existing homepage card (dark card on cream). `footer` is the
+ * variant the gooey footer needs: a pill-shaped glass field that reads as one
+ * control, sitting on the espresso ground next to oversized display type.
+ * Both share the same schema, service call and demo-mode honesty — only the
+ * chrome differs, so a fix to validation fixes both.
+ */
+export function NewsletterForm({ variant = "panel" }: { variant?: "panel" | "footer" }) {
   const [receipt, setReceipt] = useState<SubmissionReceipt | null>(null);
   const [failure, setFailure] = useState<string | null>(null);
 
@@ -69,6 +78,77 @@ export function NewsletterForm() {
             : `Reference ${receipt.reference}`}
         </p>
       </div>
+    );
+  }
+
+  if (variant === "footer") {
+    return (
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <div
+          className={cn(
+            "flex items-center gap-1.5 rounded-full border p-1.5 transition-colors duration-200",
+            errors.email || failure
+              ? "border-danger"
+              : "border-cream/35 focus-within:border-cream/80 focus-within:bg-cream/6",
+          )}
+        >
+          <label htmlFor="footer-newsletter-email" className="sr-only">
+            Email address
+          </label>
+          <input
+            id="footer-newsletter-email"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            placeholder="you@email.com"
+            aria-invalid={errors.email ? true : undefined}
+            aria-describedby="footer-newsletter-note"
+            className="min-w-0 flex-1 bg-transparent px-4 text-[16px] text-cream outline-none placeholder:text-cream/50"
+            style={{ height: 44 }}
+            {...register("email")}
+          />
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-gold font-semibold text-espresso transition-[background-color,transform] duration-200 hover:bg-cream active:scale-[0.97] disabled:opacity-60"
+            style={{ height: 44, paddingInline: 20, fontSize: 15 }}
+          >
+            {isSubmitting ? "Adding…" : "Join the letter"}
+            {isSubmitting ? null : (
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                aria-hidden="true"
+              >
+                <path d="M3 8h10M9 4l4 4-4 4" />
+              </svg>
+            )}
+          </button>
+        </div>
+
+        {/* One live region for all three states, so a screen reader hears the
+            outcome once rather than three separate announcements. */}
+        <p
+          id="footer-newsletter-note"
+          aria-live="polite"
+          className={cn(
+            "mt-3 min-h-[21px] pl-[18px] text-sm",
+            errors.email || failure ? "font-medium text-danger-soft" : "text-cream/60",
+          )}
+        >
+          {errors.email
+            ? errors.email.message
+            : failure
+              ? failure
+              : isDemoMode()
+                ? "No flat news. Leave whenever you like. (Demo — no mailing list connected.)"
+                : "No flat news. Leave whenever you like."}
+        </p>
+      </form>
     );
   }
 
