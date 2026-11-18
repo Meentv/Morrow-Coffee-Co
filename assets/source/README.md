@@ -11,3 +11,15 @@ references it.
 
 If you re-export the footage, drop the new master here and re-run the pipeline.
 Do not put masters in `public/`.
+
+## Why the guard exists
+
+This file's master was briefly duplicated back into `public/images/` when two
+branches that had each touched it were merged — git keeps the file at the old
+path because neither branch _deleted_ it, they only differed on whether it
+existed. The build then shipped 35 MB instead of 13 MB, with the 22.8 MB master
+downloadable at a guessable URL.
+
+`npm run build` now runs `scripts/check-public-size.mjs` first, which fails on
+any file in `public/` over 1.5 MB unless it is explicitly allow-listed. So the
+duplicate cannot be merged in unnoticed again.
