@@ -1,4 +1,3 @@
-import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 
 import { Seo } from "@/components/seo/Seo";
@@ -11,15 +10,9 @@ import { MenuGrid } from "@/features/menu/components/MenuGrid";
 import { NewsletterForm } from "@/features/contact/components/NewsletterForm";
 import { Marquee } from "@/features/home/components/Marquee";
 import { FEATURED_ITEMS } from "@/data/menu";
-import { CONTACT } from "@/lib/constants";
+import { FEATURED_BEANS } from "@/data/beans";
+import { BeanCard } from "@/features/shop/components/BeanCard";
 import { ProductImage } from "@/features/menu/components/ProductImage";
-
-/**
- * Hero 3D is a separate chunk, downloaded only after first paint and only if
- * WebGL is available. If the chunk fails, the static SVG poster underneath
- * remains — so the hero never looks broken.
- */
-const HeroCupScene = lazy(() => import("@/features/three/components/HeroCupScene"));
 
 /* ---------- Content preserved verbatim from the original index.html ---------- */
 
@@ -54,92 +47,79 @@ export default function HomePage() {
         path="/"
       />
 
-      {/* ---------- Hero ---------- */}
-      <section className="overflow-hidden pt-[clamp(48px,6vw,84px)] pb-[clamp(56px,7vw,96px)]">
-        <Container className="grid items-center gap-[clamp(36px,5vw,70px)] min-[900px]:grid-cols-[1.02fr_0.98fr]">
-          <div>
-            <Eyebrow withDot>coffee · food · good company</Eyebrow>
-            <h1 className="mt-5 mb-[22px] text-[clamp(3.25rem,8vw,5.75rem)]">
-              Good mornings
-              <br />
-              start <em className="display-em">here.</em>
-            </h1>
-            <p className="max-w-[440px] text-[clamp(15px,1.4vw,17px)] leading-[1.75] text-muted-strong">
-              Small-batch coffee, fresh kitchen plates, and a warm place to land. Made slowly.
-              Served generously.
-            </p>
+      {/* ---------- Hero ----------
+          Rebuilt for the editorial direction: an asymmetric 7/5 split rather
+          than a centred pair, an oversized serif headline set tight against
+          the measure, and a spec strip along the bottom hairline instead of
+          floating badges. The photograph is the hero — no overlays. */}
+      <section className="overflow-hidden pt-[clamp(36px,5vw,72px)] pb-[clamp(48px,6vw,88px)]">
+        <Container>
+          <div className="grid items-end gap-x-[clamp(28px,4vw,64px)] gap-y-10 min-[980px]:grid-cols-[1.15fr_0.85fr]">
+            <div className="min-[980px]:pb-6">
+              <Eyebrow withDot>coffee · food · good company</Eyebrow>
 
-            <div className="mt-[30px] flex flex-wrap gap-3">
-              <Button to="/menu" variant="primary" trailing="↓">
-                Explore the menu
-              </Button>
-              <Button to="/kitchen" variant="soft" trailing="↗">
-                Order a chef
-              </Button>
+              <h1 className="mt-6 display-tight text-[var(--text-hero)]">
+                Good mornings
+                <br />
+                start <em className="display-em">here.</em>
+              </h1>
+
+              <p className="mt-7 max-w-[430px] text-[clamp(15px,1.3vw,16.5px)] leading-[1.75] text-muted-strong">
+                Small-batch coffee, fresh kitchen plates, and a warm place to land. Made slowly.
+                Served generously.
+              </p>
+
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <Button to="/shop" variant="primary" trailing="→">
+                  Shop the beans
+                </Button>
+                <Button to="/menu" variant="soft">
+                  Explore the menu
+                </Button>
+              </div>
             </div>
 
-            <div className="mt-[34px] flex flex-wrap items-center gap-x-[22px] gap-y-3.5 text-[12.5px] text-muted-strong">
-              <span className="text-[13px] tracking-[3px] text-gold" aria-hidden="true">
-                ★★★★★
-              </span>
-              <span>
-                <b className="text-espresso">4.9 / 5</b> · loved by regulars
-                <span className="sr-only"> out of 5 stars</span>
-              </span>
-              <span>{CONTACT.hoursShort}</span>
-            </div>
-          </div>
-
-          {/* Visual column: the original photo treatment is preserved, with the
-              3D cup layered into the frame rather than replacing the layout. */}
-          <div className="relative">
-            <div className="relative">
-              <figure className="relative m-0 aspect-[4/4.6] overflow-hidden rounded-card-lg shadow-card max-[899px]:aspect-[4/3.4]">
+            <figure className="relative m-0">
+              <div className="overflow-hidden rounded-card-lg">
                 <ProductImage
                   src="/images/coffee-hero.jpg"
                   alt="Honey oat latte in a cream cup on a warm coffee shop table"
                   width={768}
                   height={883}
                   priority
-                  className="h-full w-full"
-                  sizes="(max-width: 900px) 92vw, 46vw"
+                  className="aspect-[4/4.4] w-full max-[640px]:aspect-[4/3.6]"
+                  sizes="(max-width: 980px) 92vw, 42vw"
                 />
-
-                {/* 3D layer. The photo already contains a latte in the lower
-                    half, so a second cup sitting on top of it reads as a
-                    mistake. Instead the 3D cup sits in the blurred upper-right
-                    corner and deliberately breaks the frame edge, which keeps
-                    the composition legible and still complements the hero.
-                    It is hidden on narrow screens where it would crowd the
-                    photo, and the still-photo treatment carries the hero. */}
-                <Suspense fallback={null}>
-                  <HeroCupScene className="pointer-events-none absolute -top-[4%] -right-[9%] hidden h-[42%] w-[52%] min-[900px]:block [&>div]:pointer-events-auto" />
-                </Suspense>
-              </figure>
-
-              <div className="absolute -top-[22px] -left-5 z-2 grid size-28 -rotate-[14deg] place-items-center rounded-full bg-espresso text-center text-[10px] leading-[1.55] font-bold tracking-[0.16em] text-cream shadow-card-soft max-[899px]:-top-4 max-[899px]:-left-1.5 max-[899px]:size-24 max-[899px]:text-[9px]">
-                <span aria-hidden="true">
-                  ROASTED
-                  <br />
-                  WITH CARE
-                  <br />✦
-                </span>
-                <span className="sr-only">Roasted with care</span>
               </div>
-
-              <div className="absolute bottom-[34px] -left-[26px] z-2 rounded-2xl border border-line bg-white px-[18px] py-[13px] shadow-card max-[899px]:bottom-4 max-[899px]:left-3.5">
-                <b className="mb-[3px] block text-[10px] tracking-[0.16em] text-gold-ink uppercase">
-                  Today&rsquo;s pour
-                </b>
-                <span className="text-[14px] font-semibold">Honey oat latte · $5.50</span>
-              </div>
-
-              <span
-                aria-hidden="true"
-                className="absolute top-[14%] -right-3.5 size-3.5 rounded-full bg-gold shadow-[0_0_0_7px_rgba(201,138,69,0.18)]"
-              />
-            </div>
+              <figcaption className="mt-3 flex items-baseline justify-between gap-4 text-[12px] text-muted-strong">
+                <span className="spec-label">Today&rsquo;s pour</span>
+                <span className="font-medium text-espresso">Honey Oat Latte · $5.50</span>
+              </figcaption>
+            </figure>
           </div>
+
+          {/* Editorial spec strip: the practical facts, set as micro-type on a
+              hairline. This replaces the floating star rating and hours chips. */}
+          <dl className="mt-12 grid grid-cols-2 gap-y-5 border-t border-line pt-6 min-[720px]:grid-cols-4">
+            <div>
+              <dt className="spec-label">First pour</dt>
+              <dd className="mt-1 text-[15px] font-medium">7:00 am, daily</dd>
+            </div>
+            <div>
+              <dt className="spec-label">Last call</dt>
+              <dd className="mt-1 text-[15px] font-medium">8:00 pm, daily</dd>
+            </div>
+            <div>
+              <dt className="spec-label">Roasted</dt>
+              <dd className="mt-1 text-[15px] font-medium">In-house, weekly</dd>
+            </div>
+            <div>
+              <dt className="spec-label">Rated</dt>
+              <dd className="mt-1 text-[15px] font-medium">
+                4.9 / 5<span className="ml-1.5 text-[12px] text-muted-strong">by regulars</span>
+              </dd>
+            </div>
+          </dl>
         </Container>
       </section>
 
@@ -155,7 +135,7 @@ export default function HomePage() {
               <>
                 Made for
                 <br />
-                the <span className="gradient-text">first sip.</span>
+                the <em className="display-em">first sip.</em>
               </>
             }
           >
@@ -175,6 +155,48 @@ export default function HomePage() {
               See the full menu →
             </Link>
           </div>
+        </Container>
+      </Section>
+
+      {/* ---------- Shop the roastery ----------
+          New section: the site now sells beans, so the homepage has to say so.
+          Kept to two featured bags rather than a full grid, so it reads as an
+          invitation rather than a second menu. */}
+      <Section tone="cream" aria-labelledby="beans-heading">
+        <Container>
+          <div className="flex flex-col justify-between gap-6 min-[860px]:flex-row min-[860px]:items-end">
+            <div>
+              <Eyebrow>the roastery</Eyebrow>
+              <h2 id="beans-heading" className="mt-4 display-tight text-[var(--text-display)]">
+                Take the
+                <br />
+                good part <em className="display-em">home.</em>
+              </h2>
+            </div>
+            <div className="max-w-[380px] min-[860px]:pb-2">
+              <p className="text-[14.5px] leading-[1.75] text-muted-strong">
+                We roast in small batches and sell it by the bag — whole bean or ground to order, in
+                250g, 500g and 1kg.
+              </p>
+              <Link
+                to="/shop"
+                className="mt-4 inline-flex items-center gap-2 border-b border-espresso pb-1 text-[14px] font-semibold transition-colors hover:border-gold-ink hover:text-gold-ink"
+              >
+                Shop all six coffees
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
+
+          <ul className="mt-10 grid grid-cols-1 gap-5 min-[760px]:grid-cols-2">
+            {FEATURED_BEANS.map((bean, index) => (
+              <li key={bean.slug} className="flex">
+                <Reveal className="flex w-full" delayMs={index * 70}>
+                  <BeanCard bean={bean} index={index} />
+                </Reveal>
+              </li>
+            ))}
+          </ul>
         </Container>
       </Section>
 
@@ -199,7 +221,7 @@ export default function HomePage() {
             <h2 id="story-heading" className="mt-[15px] mb-[18px]">
               A room for
               <br />
-              the <span className="gradient-text">in-between.</span>
+              the <em className="display-em">in-between.</em>
             </h2>
             <p className="max-w-[460px] text-[15px] leading-[1.8] text-muted-strong">
               Morrow was made for the minutes between things — before work, after school, in the
@@ -237,7 +259,7 @@ export default function HomePage() {
               <>
                 More than
                 <br />
-                <span className="gradient-text">coffee.</span>
+                <em className="display-em">coffee.</em>
               </>
             }
           >
@@ -314,7 +336,7 @@ export default function HomePage() {
               <>
                 Good company
                 <br />
-                <span className="gradient-text">keeps coming back.</span>
+                <em className="display-em">keeps coming back.</em>
               </>
             }
           />

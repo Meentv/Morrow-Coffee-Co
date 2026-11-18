@@ -1,5 +1,4 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { lazy, Suspense } from "react";
 
 import { ProductImage } from "./ProductImage";
 import { useAddedFeedback } from "../hooks/useAddedFeedback";
@@ -25,39 +24,19 @@ import { cn } from "@/lib/utils";
  * and cards revealed by filtering/search.
  * ────────────────────────────────────────────────────────────────────────────
  */
-/**
- * Lazily loaded: the "View in 3D" trigger only appears for featured items, and
- * its chunk is only requested when such a card mounts.
- */
-const ProductPreviewButton = lazy(() =>
-  import("@/features/three/components/ProductPreview").then((module) => ({
-    default: module.ProductPreviewButton,
-  })),
-);
-
-/** Featured items that have a 3D model defined. */
-const PREVIEW_KINDS: Record<string, "cup" | "croissant"> = {
-  "honey-oat-latte": "cup",
-  "butter-croissant": "croissant",
-};
-
 export function MenuCard({
   item,
   /** `list` = menu page (compact, no description clamp); `grid` = homepage. */
   layout = "grid",
   index = 0,
-  showPreview = false,
 }: {
   item: MenuItem;
   layout?: "grid" | "list";
   index?: number;
-  /** Render the 3D preview trigger (featured cards only). */
-  showPreview?: boolean;
 }) {
   const addItem = useCartStore((state) => state.addItem);
   const { added, confirm } = useAddedFeedback(item.id);
   const reduceMotion = useReducedMotion();
-  const previewKind = showPreview ? PREVIEW_KINDS[item.id] : undefined;
 
   const handleAdd = () => {
     addItem(item);
@@ -153,12 +132,6 @@ export function MenuCard({
             </AnimatePresence>
           </button>
         </div>
-
-        {previewKind ? (
-          <Suspense fallback={null}>
-            <ProductPreviewButton itemName={item.name} kind={previewKind} />
-          </Suspense>
-        ) : null}
       </div>
     </motion.article>
   );

@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 import { lineTotalCents } from "@/lib/currency";
 import { CART_LIMITS, CART_STORAGE_KEY } from "@/lib/constants";
-import type { CartLine, CartTotals, MenuItem } from "@/features/menu/types";
+import type { CartLine, CartTotals, Purchasable } from "@/features/menu/types";
 
 /**
  * Cart store.
@@ -21,7 +21,7 @@ export type CartState = {
   /** Bumped on every mutation; used to keep tabs in deterministic order. */
   updatedAt: number;
   lastAddedId: string | null;
-  addItem: (item: MenuItem, quantity?: number) => void;
+  addItem: (item: Purchasable, quantity?: number) => void;
   removeItem: (id: string) => void;
   increment: (id: string) => void;
   decrement: (id: string) => void;

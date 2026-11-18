@@ -44,13 +44,8 @@ describe("cross-tab cart synchronisation", () => {
       useCartStore.getState().addItem({
         id: "croissant",
         name: "Butter Croissant",
-        category: "bakery",
         priceCents: 380,
         image: "",
-        width: 800,
-        height: 600,
-        alt: "",
-        description: "",
       });
     });
 
@@ -71,13 +66,8 @@ describe("cross-tab cart synchronisation", () => {
       useCartStore.getState().addItem({
         id: "latte",
         name: "Latte",
-        category: "coffee",
         priceCents: 550,
         image: "",
-        width: 800,
-        height: 600,
-        alt: "",
-        description: "",
       });
     });
 

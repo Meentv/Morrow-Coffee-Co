@@ -1,9 +1,7 @@
 import { describe, expect, it, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
-import { createMemoryRouter, RouterProvider } from "react-router-dom";
-import { Suspense } from "react";
+import { screen, waitFor } from "@testing-library/react";
 
-import { routes } from "@/app/router";
+import { renderAt } from "@/test/renderWithRouter";
 import { resetCartStore } from "@/features/cart/store/cart.store";
 import { useToastStore } from "@/components/feedback/toast.store";
 
@@ -11,21 +9,11 @@ import { useToastStore } from "@/components/feedback/toast.store";
  * Whole-app smoke test.
  *
  * Mounts the *real* route table (`routes` from app/router.tsx) at each path, so
- * this exercises the actual shell, page, store and Suspense wiring — including
- * the lazy pages and the HomePage's lazy 3D island, which must not block the
- * rest of the hero from painting.
+ * this exercises the actual shell, page, store and Suspense wiring, including
+ * every lazily-loaded page.
  *
  * This is the "does the built app render" proof that does not need a browser.
  */
-function renderAt(path: string) {
-  const router = createMemoryRouter(routes, { initialEntries: [path] });
-  return render(
-    <Suspense fallback={null}>
-      <RouterProvider router={router} />
-    </Suspense>,
-  );
-}
-
 beforeEach(() => {
   resetCartStore();
   useToastStore.getState().clear();
@@ -45,6 +33,14 @@ describe("every route mounts and renders its content", () => {
     expect(await screen.findByRole("heading", { level: 1, name: /Take your/i })).toBeVisible();
     expect(screen.getByRole("searchbox", { name: "Search the menu" })).toBeInTheDocument();
     expect(screen.getAllByRole("article").length).toBe(12);
+  });
+
+  it("/shop — bean shop", async () => {
+    renderAt("/shop");
+    expect(await screen.findByRole("heading", { level: 1, name: /Beans worth/i })).toBeVisible();
+    // Six coffees, each rendered as an article with its own add button.
+    expect(screen.getAllByRole("article").length).toBe(6);
+    expect(screen.getAllByRole("button", { name: /Add .* to basket/i }).length).toBe(6);
   });
 
   it("/kitchen — kitchen", async () => {
@@ -72,7 +68,7 @@ describe("every route mounts and renders its content", () => {
 });
 
 describe("document structure on every page", () => {
-  const paths = ["/", "/menu", "/kitchen", "/order", "/contact"];
+  const paths = ["/", "/menu", "/shop", "/kitchen", "/order", "/contact"];
 
   for (const path of paths) {
     it(`${path} has one h1, one main, a banner and a contentinfo`, async () => {

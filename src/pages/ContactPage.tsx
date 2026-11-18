@@ -43,7 +43,7 @@ export default function ContactPage() {
             <h2 className="mt-[15px] mb-5">
               Come for
               <br />
-              the <span className="gradient-text">coffee.</span>
+              the <em className="display-em">coffee.</em>
             </h2>
 
             <dl className="mb-[18px] flex flex-col gap-3">
@@ -86,7 +86,7 @@ export default function ContactPage() {
               <>
                 Frequently
                 <br />
-                <span className="gradient-text">asked.</span>
+                <em className="display-em">asked.</em>
               </>
             }
           >

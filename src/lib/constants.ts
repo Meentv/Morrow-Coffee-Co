@@ -35,6 +35,7 @@ export const CONTACT = {
 export const NAV_LINKS = [
   { label: "Home", to: "/" },
   { label: "Menu", to: "/menu" },
+  { label: "Shop", to: "/shop" },
   { label: "Kitchen", to: "/kitchen" },
   { label: "Enquire", to: "/contact" },
 ] as const;

@@ -179,6 +179,54 @@ guessed at.
     `espresso/65` (5.04:1), hint to full `muted-strong` (6.78:1), and the
     newsletter demo note from `cream/45` (4.16:1) to `cream/60` (6.32:1).
 
+### Rebuild pass (2026-11-18) — editorial redesign, retail shop, real email
+
+Requested as: remove the 3D layer, redesign the site, sell coffee, connect the
+mail, and modernise the forms.
+
+19. **3D layer removed entirely.** `src/features/three/**` deleted, along with
+    `three`, `@react-three/fiber`, `@react-three/drei`, `@types/three` and the
+    "view in 3D" trigger on featured cards. It duplicated what the hero
+    photograph already showed and was by far the largest dependency.
+
+20. **Homepage hero rebuilt.** Was a centred two-column with floating badges (a
+    circular "roasted with care" stamp, a floating price card, a gold dot). Now
+    an asymmetric 1.15/0.85 split with the headline set tight at
+    `clamp(2.9rem, 9vw, 7rem)`, a hairline spec strip along the bottom, and the
+    photograph carrying the composition without overlays.
+
+21. **Gradient text replaced.** `.gradient-text` (a gold gradient on display
+    words) was the one treatment that read as generic SaaS rather than premium
+    editorial. Every instance is now the Fraunces italic accent already used
+    elsewhere, so the site has one accent treatment instead of two competing.
+
+22. **New retail shop.** `/shop` with 6 coffees, 3 bag sizes and 5 grinds.
+    Variant pricing is derived from one base price so the larger bags give a
+    genuine per-gram saving without hand-maintaining 18 prices. The basket id
+    includes the grind, because a bag ground for espresso is not interchangeable
+    with a whole-bean bag.
+
+23. **Basket generalised.** `addItem` accepted a `MenuItem`; it now accepts a
+    structural `Purchasable`, so café items and bean variants share one persisted
+    basket instead of the visitor having two carts.
+
+24. **Forms rebuilt.** New field primitives: floating labels over a persistent
+    real `<label>`, 48px control height, 16px text on mobile (prevents iOS zoom),
+    inline errors with an icon and `role="alert"`, and a `SegmentedField` radio
+    group for short exclusive choices. Labels animate as a visual echo only —
+    the research (Penzo, Wroblewski, NN/g, Baymard) is consistent that
+    placeholder-only and tiny floating labels hurt completion and accessibility.
+
+25. **Real email.** `form.service.ts` now transports through EmailJS instead of
+    only simulating. Order and kitchen forms gained a required `email` field,
+    because that is what becomes the Reply-To — a field accepting "email or
+    phone" cannot be replied to without guessing. Still never fakes a send: no
+    keys ⇒ `mode: "demo"` and the UI says so.
+
+26. **Two nested `<aside>` landmarks** were found on the new shop page and fixed
+    (the side rail is a `div`; `CartSummaryPanel` owns the complementary
+    landmark).
+
 ---
 
 ## 5. Design tokens → Tailwind v4 `@theme`

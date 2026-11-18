@@ -27,7 +27,10 @@ export function EnquiryForm() {
 
   const onSubmit = async (values: EnquiryValues) => {
     setFailure(null);
-    const result = await submitForm("contact", values);
+    const result = await submitForm("contact", values, {
+      replyTo: values.email,
+      replyName: values.name,
+    });
 
     if (!result.ok) {
       setFailure(result.error.message);

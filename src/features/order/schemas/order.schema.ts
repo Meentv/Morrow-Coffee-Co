@@ -28,6 +28,11 @@ export const orderSchema = z
       .trim()
       .min(1, "Enter your first name")
       .max(60, "Please keep your name under 60 characters"),
+    email: z
+      .string()
+      .trim()
+      .min(1, "Enter an email address so we can send your confirmation")
+      .regex(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, "Enter a valid email address"),
     phone: z
       .string()
       .trim()

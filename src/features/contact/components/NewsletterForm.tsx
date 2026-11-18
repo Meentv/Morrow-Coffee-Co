@@ -37,10 +37,11 @@ export function NewsletterForm() {
   const onSubmit = async (values: NewsletterValues) => {
     setFailure(null);
 
-    const result = await submitForm("newsletter", {
-      email: values.email,
-      source: "homepage-cta",
-    });
+    const result = await submitForm(
+      "newsletter",
+      { email: values.email, source: "homepage-cta" },
+      { replyTo: values.email },
+    );
 
     if (!result.ok) {
       setFailure(result.error.message);

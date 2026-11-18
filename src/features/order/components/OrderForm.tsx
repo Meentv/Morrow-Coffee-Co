@@ -47,6 +47,7 @@ export function OrderForm({ onSuccess }: { onSuccess?: (receipt: OrderReceipt) =
     resolver: zodResolver(orderSchema),
     defaultValues: {
       firstName: "",
+      email: "",
       phone: "",
       orderType: ORDER_TYPES[0],
       timing: ORDER_TIMINGS[0],
@@ -94,7 +95,10 @@ export function OrderForm({ onSuccess }: { onSuccess?: (receipt: OrderReceipt) =
       placedAt: new Date().toISOString(),
     };
 
-    const result = await submitForm("order", payload);
+    const result = await submitForm("order", payload, {
+      replyTo: values.email,
+      replyName: values.firstName,
+    });
 
     if (!result.ok) {
       setFailure(result.error.message);
@@ -171,6 +175,16 @@ export function OrderForm({ onSuccess }: { onSuccess?: (receipt: OrderReceipt) =
           required
           error={errors.firstName?.message}
           {...register("firstName")}
+        />
+        <TextField
+          label="Email"
+          placeholder="you@example.com"
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          required
+          error={errors.email?.message}
+          {...register("email")}
         />
         <TextField
           label="Phone"

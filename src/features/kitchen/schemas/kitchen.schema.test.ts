@@ -7,25 +7,38 @@ import { newsletterSchema } from "@/features/contact/schemas/newsletter.schema";
 describe("kitchen enquiry schema", () => {
   const base = {
     name: "Ada",
-    contact: "ada@example.com",
+    email: "ada@example.com",
+    contact: "",
     eventType: EVENT_TYPES[0],
     guestCount: GUEST_COUNTS[1],
     details: "A launch party for 40 people on the 12th, evening, coffee bar plus small plates.",
   };
 
-  it("accepts an email address as contact", () => {
+  it("accepts a valid email with no phone number", () => {
     expect(kitchenSchema.safeParse(base).success).toBe(true);
   });
 
-  it("accepts a phone number as contact (label is 'Email or phone')", () => {
+  it("accepts an optional phone number alongside the email", () => {
     expect(kitchenSchema.safeParse({ ...base, contact: "+234 801 234 5678" }).success).toBe(true);
   });
 
-  it("rejects a contact value that is neither", () => {
+  it("requires an email address, because it is used as the reply-to", () => {
+    const result = kitchenSchema.safeParse({ ...base, email: "" });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues[0]?.message).toBe("Enter your email address so we can reply");
+    }
+  });
+
+  it("rejects a malformed email", () => {
+    expect(kitchenSchema.safeParse({ ...base, email: "ada@" }).success).toBe(false);
+  });
+
+  it("rejects a phone number that is not a phone number", () => {
     const result = kitchenSchema.safeParse({ ...base, contact: "message me" });
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.issues[0]?.message).toBe("Enter a valid email address or phone number");
+      expect(result.error.issues[0]?.message).toBe("Enter a valid phone number");
     }
   });
 

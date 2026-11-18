@@ -21,12 +21,13 @@ byte-for-byte in [`legacy/vanilla/`](./legacy/vanilla) for reference.
 
 ### What it does
 
-- **Menu** — 12 products in 4 categories, live search, `?cat=` deep links, featured grid
-- **Cart** — persistent basket with quantity steppers, integer-cent maths, cross-tab sync
+- **Shop** — retail coffee. 6 coffees, 3 bag sizes, 5 grind options, live per-100g pricing
+- **Menu** — 12 café products in 4 categories, live search, `?cat=` deep links, featured grid
+- **Cart** — one persistent basket for drinks, food _and_ beans; integer-cent maths, cross-tab sync
 - **Order** — checkout with pickup/delivery rules and a validated submission payload
 - **Kitchen** — private-chef enquiry (coffee bar, breakfast table, full evening)
 - **Enquire** — contact form, visit details, FAQ accordion
-- **3D** — interactive lathe-geometry coffee cup in the hero and in product previews
+- **Email** — every form really sends, via EmailJS, with a `reply_to` that reaches the customer
 - **Newsletter** — validated subscription with loading/success/error states
 
 ---
@@ -65,7 +66,7 @@ Tailwind CSS 4.3 (via `@tailwindcss/vite`, tokens in `@theme`)
 
 **Animation** — Motion 14.14 (`motion/react`)
 
-**3D** — Three.js 0.187 · React Three Fiber 9.8 · Drei 10.7
+**Email** — EmailJS `@emailjs/browser` 5.0 (no server; see `docs/EMAIL_SETUP.md`)
 
 **Quality** — Vitest 3.2 · Testing Library 16.3 · Playwright 1.65 · ESLint 9
 (flat config, `jsx-a11y`, React Hooks/Compiler rules) · Prettier 3.6
@@ -100,10 +101,10 @@ src/
 │   ├── kitchen/          schemas/ · components/KitchenEnquiryForm
 │   ├── order/            schemas/ · components/OrderForm
 │   ├── contact/          schemas/ · components/ (Enquiry, Newsletter, FaqAccordion)
-│   ├── home/             components/Marquee
-│   └── three/            components/ · models/ · hooks/usePointerParallax · lib/useWebGLSupport
-├── pages/                HomePage · MenuPage · KitchenPage · OrderPage · ContactPage · NotFoundPage
-├── data/                 menu.ts (12 items) · faq.ts (4 entries)
+│   ├── shop/             components/BeanCard
+│   └── home/             components/Marquee
+├── pages/                HomePage · MenuPage · ShopPage · KitchenPage · OrderPage · ContactPage · NotFoundPage
+├── data/                 menu.ts (12 items) · beans.ts (6 coffees) · faq.ts (4 entries)
 ├── lib/                  currency.ts · constants.ts · utils.ts
 ├── hooks/                useInViewOnce
 ├── services/             form.service.ts  ← single submission boundary
@@ -130,20 +131,22 @@ legacy/vanilla/           the untouched original site
 
 ## 5. Feature list
 
-| Area       | Detail                                                                                                                                                                                     |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Routing    | 5 routes + 404, all lazy-loaded via `React.lazy` + `Suspense`                                                                                                                              |
-| Menu       | Typed data, category filter (`aria-pressed`), search over name/description/category, `?cat=` and `?q=` URL state, empty state with reset, result counter, `/` keyboard shortcut for search |
-| Cart       | Add/remove/increment/decrement, integer cents, `localStorage` persistence under the **original** `morrow-cart` key with legacy migration, cross-tab sync, 99-per-line / 50-line caps       |
-| Order      | Empty-cart block, delivery-address rule, full line-item payload (ids, quantities, unit + line totals, currency), double-submit guard, basket cleared only on success                       |
-| Kitchen    | 5-field private-chef enquiry, email-or-phone union validation                                                                                                                              |
-| Contact    | Enquiry form, phone/email links, 4-item FAQ                                                                                                                                                |
-| FAQ        | `aria-expanded`/`aria-controls`, measured-height animation, keyboard operable                                                                                                              |
-| Newsletter | Zod email validation, loading/success/error, honest demo notice                                                                                                                            |
-| Toasts     | success/error/info, deduped, capped stack, auto-dismiss, dismiss button, single `aria-live="polite"` region                                                                                |
-| 3D         | Procedural lathe cup + croissant, slow auto-rotation, pointer parallax, DPR capped at 2, offscreen/tab-hidden pause, SVG poster while loading, WebGL detection, `prefers-reduced-motion`   |
-| A11y       | Skip link, landmarks, one `h1`/page, 4.5:1 text contrast, visible focus rings, labelled fields, modal focus trap + restore, reduced-motion support                                         |
-| SEO        | Per-route title/description/OG/Twitter, `noindex` on 404, canonical only when a real origin is configured                                                                                  |
+| Area       | Detail                                                                                                                                                                                                          |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Routing    | 6 routes + 404, all lazy-loaded via `React.lazy` + `Suspense`                                                                                                                                                   |
+| Shop       | 6 coffees × 3 bag sizes × 5 grinds; variant price + price-per-100g computed from integer cents; roast filter with `aria-pressed`; variant identity in the basket id so the same bean at two grinds is two lines |
+| Email      | EmailJS transport, one template for all five forms, `reply_to` wired from each form, rate-limit and misconfiguration surfaced distinctly, never a fake success                                                  |
+| Menu       | Typed data, category filter (`aria-pressed`), search over name/description/category, `?cat=` and `?q=` URL state, empty state with reset, result counter, `/` keyboard shortcut for search                      |
+| Cart       | Add/remove/increment/decrement, integer cents, `localStorage` persistence under the **original** `morrow-cart` key with legacy migration, cross-tab sync, 99-per-line / 50-line caps                            |
+| Order      | Empty-cart block, delivery-address rule, full line-item payload (ids, quantities, unit + line totals, currency), double-submit guard, basket cleared only on success                                            |
+| Kitchen    | 5-field private-chef enquiry, email-or-phone union validation                                                                                                                                                   |
+| Contact    | Enquiry form, phone/email links, 4-item FAQ                                                                                                                                                                     |
+| FAQ        | `aria-expanded`/`aria-controls`, measured-height animation, keyboard operable                                                                                                                                   |
+| Newsletter | Zod email validation, loading/success/error, honest demo notice                                                                                                                                                 |
+| Toasts     | success/error/info, deduped, capped stack, auto-dismiss, dismiss button, single `aria-live="polite"` region                                                                                                     |
+| Forms      | Floating-label fields with a persistent real `<label>`, 48px touch targets, 16px mobile text, inline errors with icons, segmented radio groups, `aria-invalid` + `role="alert"`                                 |
+| A11y       | Skip link, landmarks, one `h1`/page, 4.5:1 text contrast, visible focus rings, labelled fields, modal focus trap + restore, reduced-motion support                                                              |
+| SEO        | Per-route title/description/OG/Twitter, `noindex` on 404, canonical only when a real origin is configured                                                                                                       |
 
 ---
 
@@ -194,13 +197,18 @@ Current results (actually run — see §18):
 
 ## 10. Environment variables
 
-| Variable            | Required             | Purpose                                                                                                                                                |
-| ------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `VITE_SITE_URL`     | recommended          | Public origin, no trailing slash. Enables canonical URLs + absolute OG images. Unset ⇒ canonical is **omitted** rather than pointing at a fake domain. |
-| `VITE_API_BASE_URL` | for real submissions | Base URL of the form backend. Unset ⇒ **demo mode**.                                                                                                   |
-| `VITE_ANALYTICS_ID` | optional             | Reserved, not wired up.                                                                                                                                |
+| Variable                   | Required       | Purpose                                                                                                                                                |
+| -------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `VITE_SITE_URL`            | recommended    | Public origin, no trailing slash. Enables canonical URLs + absolute OG images. Unset ⇒ canonical is **omitted** rather than pointing at a fake domain. |
+| `VITE_EMAILJS_SERVICE_ID`  | for real email | EmailJS service id. Missing ⇒ **demo mode**, clearly labelled.                                                                                         |
+| `VITE_EMAILJS_TEMPLATE_ID` | for real email | EmailJS template id (one template serves all forms).                                                                                                   |
+| `VITE_EMAILJS_PUBLIC_KEY`  | for real email | EmailJS public key. Publishable by design; restrict with the dashboard's allowed-origins list.                                                         |
+| `VITE_ANALYTICS_ID`        | optional       | Reserved, not wired up.                                                                                                                                |
 
 Only `VITE_`-prefixed values reach the browser. **Never** put a secret in one.
+
+Full 5-minute walkthrough, including the exact template body to paste into the
+EmailJS dashboard: [`docs/EMAIL_SETUP.md`](./docs/EMAIL_SETUP.md).
 
 ## 11. Deployment
 
@@ -224,36 +232,38 @@ netlify deploy --build --prod     # production
 `/index.html`, otherwise deep links (`/menu?cat=coffee`) 404 on refresh.
 Set the env vars in the platform's dashboard, not in a committed file.
 
-## 12. 3D assets
+## 12. Photography and the removed 3D layer
 
-**No model files are required.** Both scenes are built procedurally with Three.js
-`LatheGeometry` / `SphereGeometry`, so the site downloads **0 KB** of 3D assets
-and there are no licence questions.
+**The 3D layer has been removed.** The homepage hero previously layered an
+interactive Three.js cup over the photograph, with a procedural croissant
+preview on featured menu cards. It was removed on request: it was the heaviest
+part of the app (a separate **940 kB / 252 kB gzip** chunk) and it competed with
+the real hero photography rather than complementing it.
 
-To swap in GLB models, place them at exactly:
+What that removed, concretely:
 
-| File                                 | Used by           |
-| ------------------------------------ | ----------------- |
-| `public/models/morrow-cup.glb`       | homepage hero cup |
-| `public/models/morrow-croissant.glb` | croissant preview |
+- `three`, `@react-three/fiber`, `@react-three/drei`, `@types/three` — four
+  dependencies and their transitive tree.
+- `src/features/three/**` — the scenes, models, WebGL detection and pointer hook.
+- The "view in 3D" trigger on featured cards, and `public/models/`.
 
-Constraints: ≤ 1.5 MB, Draco or Meshopt compressed, CC0 or commercially
-licensed, +Y up, ~1 unit tall, origin at the base. Full details in
-[`public/models/README.md`](./public/models/README.md).
+The 6 route chunks and the eager payload were unaffected (167.6 kB gzip before
+and after); the win is that the 3D graph no longer exists at all. Photography is
+unchanged and documented in [`docs/IMAGE_AUDIT.md`](./docs/IMAGE_AUDIT.md).
 
 ## 13. Licensing
 
 - **Code** in this repository: © 2025 Morrow Coffee Co.
 - **Fonts**: Inter © The Inter Project Authors, Fraunces © Undercase Type — both
   SIL Open Font License 1.1, self-hosted via `@fontsource-variable`.
-- **Three.js**: MIT. **React**: MIT. **Tailwind CSS**: MIT. **Motion**: MIT.
+- **React**: MIT. **Tailwind CSS**: MIT. **Motion**: MIT. **EmailJS browser SDK**: MIT.
 - **Photography**: 20 photographs supplied by the site owner, cropped and
   optimised into 23 files (JPEG + WebP). Provenance, watermarks and the two
   outstanding product mismatches are documented in
   [`docs/IMAGE_AUDIT.md`](./docs/IMAGE_AUDIT.md). **9 of the 20 source frames
   carry a visible stock-site watermark** and should be replaced with licensed or
   original photography before launch.
-- **3D models**: none bundled (procedural only).
+- **3D**: removed. No 3D assets, models or licences remain in the project.
 
 ## 14. Important architectural decisions
 
@@ -264,15 +274,15 @@ licensed, +Y up, ~1 unit tall, origin at the base. Full details in
    scroll-reveal `transform` and the `:hover` lift on the _same_ element; equal
    specificity plus cascade order meant the lift never fired. Reveal now lives on
    a wrapper, the lift on the card. A regression test asserts they stay separated.
-3. **One submission boundary.** All four forms call `submitForm(kind, payload)`.
+3. **One submission boundary.** All five forms call `submitForm(kind, payload, { replyTo })`.
    Demo vs live is decided inside that module, and the result is tagged
    `mode: "demo" | "live"` so the UI can be honest instead of promising an order
    reached a kitchen.
-4. **Three.js is unreachable from the entry bundle.** Every 3D consumer sits
-   behind `lazy()`. A hand-written `manualChunks` was removed after it accidentally
-   made the entry statically import the 940 kB 3D chunk via Vite's preload
-   helper — verified by inspecting `dist/index.html` (only the React chunk is
-   preloaded). See the comment in `vite.config.ts`.
+4. **The 3D layer was removed rather than optimised.** It was the single largest
+   dependency in the project and it duplicated what the hero photograph already
+   showed. Deleting it removed four packages and a 940 kB chunk outright. The
+   page chunks and eager payload were unchanged — the win is maintenance surface
+   and total bytes, not first-paint.
 5. **URL is the state for menu filtering.** `?cat=` / `?q=` means deep links,
    refreshes, shares and the back button all work for free.
 6. **Demo mode is never dressed up as success.** Success panels state "Demo
@@ -307,8 +317,10 @@ See the delivery report for the full list. In short:
 ## 16. Project docs
 
 - [`docs/MIGRATION.md`](./docs/MIGRATION.md) — page/section/component mapping, every
-  original interaction, all 18 documented bug fixes (12 from the migration,
-  6 from the photo/polish pass), and the token translation table.
+  original interaction, all 26 documented changes and bug fixes, and the token
+  translation table.
+- [`docs/EMAIL_SETUP.md`](./docs/EMAIL_SETUP.md) — connecting real email in 5 minutes,
+  including the template body and every variable it receives.
 - [`docs/IMAGE_AUDIT.md`](./docs/IMAGE_AUDIT.md) — the 23 delivered files with true
   dimensions and weights, which upload each one came from, the watermark
   disclosure, the crop decisions, and the replacement list.
