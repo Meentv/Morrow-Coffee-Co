@@ -54,6 +54,7 @@ describe("order page: validation", () => {
     renderWithRouter(<OrderPage />, { route: "/order" });
 
     await user.type(screen.getByLabelText(/First name/i), "Ada");
+    await user.type(screen.getByLabelText(/^Email/i), "ada@example.com");
     await user.click(screen.getByRole("button", { name: /Place request/i }));
 
     expect(await screen.findByText(/Enter a phone number/i)).toBeInTheDocument();
@@ -64,6 +65,7 @@ describe("order page: validation", () => {
     renderWithRouter(<OrderPage />, { route: "/order" });
 
     await user.type(screen.getByLabelText(/First name/i), "Ada");
+    await user.type(screen.getByLabelText(/^Email/i), "ada@example.com");
     await user.type(screen.getByLabelText(/Phone/i), "abc");
     await user.click(screen.getByRole("button", { name: /Place request/i }));
 
@@ -75,6 +77,7 @@ describe("order page: validation", () => {
     renderWithRouter(<OrderPage />, { route: "/order" });
 
     await user.type(screen.getByLabelText(/First name/i), "Ada");
+    await user.type(screen.getByLabelText(/^Email/i), "ada@example.com");
     await user.type(screen.getByLabelText(/Phone/i), "+234 801 234 5678");
     await user.selectOptions(screen.getByLabelText(/Order type/i), "Local delivery");
     await user.click(screen.getByRole("button", { name: /Place request/i }));
@@ -94,6 +97,7 @@ describe("order page: validation", () => {
     renderWithRouter(<OrderPage />, { route: "/order" });
 
     await user.type(screen.getByLabelText(/First name/i), "Ada");
+    await user.type(screen.getByLabelText(/^Email/i), "ada@example.com");
     await user.type(screen.getByLabelText(/Phone/i), "+234 801 234 5678");
     await user.selectOptions(screen.getByLabelText(/Order type/i), "Pickup from Morrow");
     await user.click(screen.getByRole("button", { name: /Place request/i }));
@@ -113,6 +117,7 @@ describe("order page: successful submission", () => {
     renderWithRouter(<OrderPage />, { route: "/order" });
 
     await user.type(screen.getByLabelText(/First name/i), "Ada");
+    await user.type(screen.getByLabelText(/^Email/i), "ada@example.com");
     await user.type(screen.getByLabelText(/Phone/i), "+234 801 234 5678");
     await user.type(screen.getByLabelText(/Anything else/i), "Oat milk please");
     await user.click(screen.getByRole("button", { name: /Place request/i }));
@@ -165,6 +170,7 @@ describe("order page: successful submission", () => {
     renderWithRouter(<OrderPage />, { route: "/order" });
 
     await user.type(screen.getByLabelText(/First name/i), "Ada");
+    await user.type(screen.getByLabelText(/^Email/i), "ada@example.com");
     await user.type(screen.getByLabelText(/Phone/i), "+234 801 234 5678");
     await user.click(screen.getByRole("button", { name: /Place request/i }));
 
@@ -179,6 +185,7 @@ describe("order page: successful submission", () => {
     renderWithRouter(<OrderPage />, { route: "/order" });
 
     await user.type(screen.getByLabelText(/First name/i), "Ada");
+    await user.type(screen.getByLabelText(/^Email/i), "ada@example.com");
     await user.type(screen.getByLabelText(/Phone/i), "+234 801 234 5678");
     await user.click(screen.getByRole("button", { name: /Place request/i }));
 
@@ -195,6 +202,7 @@ describe("order page: successful submission", () => {
     renderWithRouter(<OrderPage />, { route: "/order" });
 
     await user.type(screen.getByLabelText(/First name/i), "Ada");
+    await user.type(screen.getByLabelText(/^Email/i), "ada@example.com");
     await user.type(screen.getByLabelText(/Phone/i), "+234 801 234 5678");
 
     const submit = screen.getByRole("button", { name: /Place request/i });
@@ -224,6 +232,7 @@ describe("order page: service failure", () => {
     renderWithRouter(<OrderPage />, { route: "/order" });
 
     await user.type(screen.getByLabelText(/First name/i), "Ada");
+    await user.type(screen.getByLabelText(/^Email/i), "ada@example.com");
     await user.type(screen.getByLabelText(/Phone/i), "+234 801 234 5678");
     await user.click(screen.getByRole("button", { name: /Place request/i }));
 

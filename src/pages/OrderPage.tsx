@@ -106,7 +106,7 @@ export default function OrderPage() {
               <>
                 Need a chef
                 <br />
-                <span className="gradient-text">with that?</span>
+                <em className="display-em">with that?</em>
               </>
             }
           >

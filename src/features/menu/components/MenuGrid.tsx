@@ -32,12 +32,7 @@ export function MenuGrid({
       {items.map((item, index) => (
         <li key={item.id} className="flex">
           <Reveal className="flex w-full" delayMs={Math.min(index, 3) * 70}>
-            <MenuCard
-              item={item}
-              layout={columns === "list" ? "list" : "grid"}
-              index={index}
-              showPreview={Boolean(item.featured)}
-            />
+            <MenuCard item={item} layout={columns === "list" ? "list" : "grid"} index={index} />
           </Reveal>
         </li>
       ))}

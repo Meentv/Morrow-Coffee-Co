@@ -105,7 +105,7 @@ export default function KitchenPage() {
             <h2 className="mt-[15px] mb-[18px]">
               The room can be
               <br />
-              <span className="gradient-text">anywhere.</span>
+              <em className="display-em">anywhere.</em>
             </h2>
             <p className="max-w-[460px] text-[15px] leading-[1.8] text-muted-strong">
               Bring Morrow to your office, home, studio, or event. We&rsquo;ll tailor a menu around
@@ -154,7 +154,7 @@ export default function KitchenPage() {
               <>
                 Pick your
                 <br />
-                <span className="gradient-text">kind of good.</span>
+                <em className="display-em">kind of good.</em>
               </>
             }
           >
@@ -197,7 +197,7 @@ export default function KitchenPage() {
               <>
                 The people
                 <br />
-                <span className="gradient-text">making it.</span>
+                <em className="display-em">making it.</em>
               </>
             }
           >
@@ -240,7 +240,7 @@ export default function KitchenPage() {
             <h2 className="mt-[15px] mb-[18px]">
               Tell us what
               <br />
-              you&rsquo;re <span className="gradient-text">gathering for.</span>
+              you&rsquo;re <em className="display-em">gathering for.</em>
             </h2>
             <p className="text-sm leading-[1.8] text-muted-strong">
               We&rsquo;ll reply with availability, a menu direction, and a simple estimate. The more

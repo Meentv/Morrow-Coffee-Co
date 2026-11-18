@@ -39,8 +39,20 @@ export type MenuItem = {
    * Surfaced in docs/IMAGE_AUDIT.md rather than hidden behind inaccurate alt text.
    */
   imageMismatch?: boolean;
-  /** Optional compressed GLB under /models for the 3D preview. Omitted → procedural model. */
-  model?: string;
+};
+
+/**
+ * The minimum a product must provide to go in the basket.
+ *
+ * Deliberately structural rather than `MenuItem`: the retail bean shop sells
+ * variants (a weight + a grind) that are not menu items, but they must land in
+ * the same persisted basket so a visitor never ends up with two carts.
+ */
+export type Purchasable = {
+  id: string;
+  name: string;
+  priceCents: number;
+  image: string;
 };
 
 /** A cart line as persisted by Zustand. Snapshot of the product at add-time. */

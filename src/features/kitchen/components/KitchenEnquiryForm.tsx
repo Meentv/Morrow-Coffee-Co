@@ -36,6 +36,7 @@ export function KitchenEnquiryForm() {
     resolver: zodResolver(kitchenSchema),
     defaultValues: {
       name: "",
+      email: "",
       contact: "",
       eventType: EVENT_TYPES[0],
       guestCount: GUEST_COUNTS[0],
@@ -45,7 +46,10 @@ export function KitchenEnquiryForm() {
 
   const onSubmit = async (values: KitchenValues) => {
     setFailure(null);
-    const result = await submitForm("kitchen", values);
+    const result = await submitForm("kitchen", values, {
+      replyTo: values.email,
+      replyName: values.name,
+    });
 
     if (!result.ok) {
       setFailure(result.error.message);
@@ -100,10 +104,21 @@ export function KitchenEnquiryForm() {
               {...register("name")}
             />
             <TextField
-              label="Email or phone"
-              placeholder="How should we reach you?"
+              label="Email"
+              placeholder="you@example.com"
+              type="email"
+              inputMode="email"
               autoComplete="email"
               required
+              error={errors.email?.message}
+              {...register("email")}
+            />
+            <TextField
+              label="Phone"
+              placeholder="Optional — for the day of the event"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
               error={errors.contact?.message}
               {...register("contact")}
             />

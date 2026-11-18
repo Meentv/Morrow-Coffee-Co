@@ -4,6 +4,7 @@ import { orderSchema, ORDER_TIMINGS, ORDER_TYPES, DELIVERY } from "./order.schem
 
 const validBase = {
   firstName: "Ada",
+  email: "ada@example.com",
   phone: "+234 801 234 5678",
   orderType: ORDER_TYPES[0],
   timing: ORDER_TIMINGS[0],

@@ -23,9 +23,11 @@ export type EventType = (typeof EVENT_TYPES)[number];
 export type GuestCount = (typeof GUEST_COUNTS)[number];
 
 /**
- * Accepts an email address OR a phone number, because the original label was
- * literally "Email or phone". A single field with a union validation is the
- * honest model of that requirement — splitting it would change the form.
+ * The original had one "Email or phone" field. It is now split deliberately:
+ * `email` is required and is used as the Reply-To so a chef can answer the
+ * enquiry directly, and `contact` is an optional phone number. A field that
+ * accepts either cannot be used for replies without guessing, and guessing
+ * produces undeliverable mail.
  */
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE = /^\+?[\d\s().-]{7,20}$/;
@@ -36,14 +38,16 @@ export const kitchenSchema = z.object({
     .trim()
     .min(1, "Enter your name")
     .max(80, "Please keep your name under 80 characters"),
+  email: z
+    .string()
+    .trim()
+    .min(1, "Enter your email address so we can reply")
+    .refine((value) => EMAIL.test(value), "Enter a valid email address"),
   contact: z
     .string()
     .trim()
-    .min(1, "Enter an email address or phone number")
-    .refine(
-      (value) => EMAIL.test(value) || PHONE.test(value),
-      "Enter a valid email address or phone number",
-    ),
+    .max(40, "Please keep this under 40 characters")
+    .refine((value) => value === "" || PHONE.test(value), "Enter a valid phone number"),
   eventType: z.enum(EVENT_TYPES, { message: "Choose the kind of event" }),
   guestCount: z.enum(GUEST_COUNTS, { message: "Choose a guest count" }),
   details: z

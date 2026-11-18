@@ -9,10 +9,11 @@ import { RouteError } from "@/components/feedback/RouteError";
  *
  * Every page is a separate chunk (React.lazy + Suspense in AppLayout), so the
  * first visit downloads only the shell; a visitor who never opens /menu never
- * downloads the menu page, and Three.js never lands in any page chunk.
+ * downloads the menu page.
  */
 const HomePage = lazy(() => import("@/pages/HomePage"));
 const MenuPage = lazy(() => import("@/pages/MenuPage"));
+const ShopPage = lazy(() => import("@/pages/ShopPage"));
 const KitchenPage = lazy(() => import("@/pages/KitchenPage"));
 const OrderPage = lazy(() => import("@/pages/OrderPage"));
 const ContactPage = lazy(() => import("@/pages/ContactPage"));
@@ -26,6 +27,7 @@ export const routes = [
     children: [
       { index: true, element: <HomePage /> },
       { path: "menu", element: <MenuPage /> },
+      { path: "shop", element: <ShopPage /> },
       { path: "kitchen", element: <KitchenPage /> },
       { path: "order", element: <OrderPage /> },
       { path: "contact", element: <ContactPage /> },
