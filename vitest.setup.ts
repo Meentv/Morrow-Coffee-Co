@@ -38,10 +38,7 @@ class MockIntersectionObserver implements IntersectionObserver {
 
   observe(target: Element): void {
     // Report visible immediately, matching a page that is already scrolled to top.
-    this.callback(
-      [{ isIntersecting: true, target } as unknown as IntersectionObserverEntry],
-      this,
-    );
+    this.callback([{ isIntersecting: true, target } as unknown as IntersectionObserverEntry], this);
   }
 
   unobserve(): void {}
@@ -75,6 +72,18 @@ if (!window.requestIdleCallback) {
 
 /* Canvas is not implemented in jsdom; the WebGL probe must fail gracefully. */
 HTMLCanvasElement.prototype.getContext = (() => null) as never;
+
+/**
+ * Media playback.
+ *
+ * jsdom throws "Not implemented" for play/pause. Returning a resolved promise is
+ * the honest stand-in: it models the *successful* autoplay path, which is what
+ * a real muted video does in a real browser. That keeps the test meaningful —
+ * if the hero ever stops calling play(), or starts throwing on a rejected
+ * promise, the failure surfaces instead of being swallowed by a noop mock.
+ */
+HTMLMediaElement.prototype.play = (() => Promise.resolve()) as never;
+HTMLMediaElement.prototype.pause = (() => {}) as never;
 
 afterEach(() => {
   cleanup();

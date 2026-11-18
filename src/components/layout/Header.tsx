@@ -49,7 +49,7 @@ export function Header() {
   }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-60 border-b border-line-soft bg-cream/88 backdrop-blur-[14px] backdrop-saturate-150">
+    <header className="sticky top-0 z-60 border-b border-line-soft glass-light">
       <div className="relative">
         <Container className="flex h-[var(--header-h)] items-center justify-between gap-6">
           <Brand />

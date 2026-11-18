@@ -13,6 +13,7 @@ import { FEATURED_ITEMS } from "@/data/menu";
 import { FEATURED_BEANS } from "@/data/beans";
 import { BeanCard } from "@/features/shop/components/BeanCard";
 import { ProductImage } from "@/features/menu/components/ProductImage";
+import { VideoHero } from "@/features/home/components/VideoHero";
 
 /* ---------- Content preserved verbatim from the original index.html ---------- */
 
@@ -47,60 +48,18 @@ export default function HomePage() {
         path="/"
       />
 
-      {/* ---------- Hero ----------
-          Rebuilt for the editorial direction: an asymmetric 7/5 split rather
-          than a centred pair, an oversized serif headline set tight against
-          the measure, and a spec strip along the bottom hairline instead of
-          floating badges. The photograph is the hero — no overlays. */}
-      <section className="overflow-hidden pt-[clamp(36px,5vw,72px)] pb-[clamp(48px,6vw,88px)]">
+      {/* ---------- Cinematic hero ----------
+          The supplied coffee-journey clip now carries the hero: pour -> sky ->
+          plantation, re-cut to loop seamlessly and encoded as a resolution
+          ladder so phones never fetch the 1920 file. See VideoHero for the
+          full write-up on the encode and the reduced-motion behaviour. */}
+      <VideoHero />
+
+      {/* Practical facts, moved out of the hero. On a video the spec strip
+          competed with the footage; on cream beneath it, it reads as a label. */}
+      <section aria-label="At a glance" className="border-b border-line">
         <Container>
-          <div className="grid items-end gap-x-[clamp(28px,4vw,64px)] gap-y-10 min-[980px]:grid-cols-[1.15fr_0.85fr]">
-            <div className="min-[980px]:pb-6">
-              <Eyebrow withDot>coffee · food · good company</Eyebrow>
-
-              <h1 className="mt-6 display-tight text-[var(--text-hero)]">
-                Good mornings
-                <br />
-                start <em className="display-em">here.</em>
-              </h1>
-
-              <p className="mt-7 max-w-[430px] text-[clamp(15px,1.3vw,16.5px)] leading-[1.75] text-muted-strong">
-                Small-batch coffee, fresh kitchen plates, and a warm place to land. Made slowly.
-                Served generously.
-              </p>
-
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <Button to="/shop" variant="primary" trailing="→">
-                  Shop the beans
-                </Button>
-                <Button to="/menu" variant="soft">
-                  Explore the menu
-                </Button>
-              </div>
-            </div>
-
-            <figure className="relative m-0">
-              <div className="overflow-hidden rounded-card-lg">
-                <ProductImage
-                  src="/images/coffee-hero.jpg"
-                  alt="Honey oat latte in a cream cup on a warm coffee shop table"
-                  width={768}
-                  height={883}
-                  priority
-                  className="aspect-[4/4.4] w-full max-[640px]:aspect-[4/3.6]"
-                  sizes="(max-width: 980px) 92vw, 42vw"
-                />
-              </div>
-              <figcaption className="mt-3 flex items-baseline justify-between gap-4 text-[12px] text-muted-strong">
-                <span className="spec-label">Today&rsquo;s pour</span>
-                <span className="font-medium text-espresso">Honey Oat Latte · $5.50</span>
-              </figcaption>
-            </figure>
-          </div>
-
-          {/* Editorial spec strip: the practical facts, set as micro-type on a
-              hairline. This replaces the floating star rating and hours chips. */}
-          <dl className="mt-12 grid grid-cols-2 gap-y-5 border-t border-line pt-6 min-[720px]:grid-cols-4">
+          <dl className="grid grid-cols-2 gap-y-5 py-6 min-[720px]:grid-cols-4">
             <div>
               <dt className="spec-label">First pour</dt>
               <dd className="mt-1 text-[15px] font-medium">7:00 am, daily</dd>
@@ -279,7 +238,11 @@ export default function HomePage() {
                   className="absolute inset-0 h-full w-full"
                   sizes="(max-width: 900px) 92vw, 55vw"
                 />
-                <div className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(26,16,11,0.94)_20%,rgba(26,16,11,0))] px-[30px] pt-[90px] pb-[30px] text-cream">
+                {/* Glass plate over photography: the panel is a floated surface,
+                    which is the case glass is actually for. It also lets the
+                    image show through instead of being blacked out by a scrim,
+                    and gives the text a defined edge at any image brightness. */}
+                <div className="absolute inset-x-3 bottom-3 rounded-card px-[30px] py-[26px] text-cream glass-dark sm:inset-x-4 sm:bottom-4">
                   <Eyebrow tone="gold">Morrow kitchen</Eyebrow>
                   <h3 className="mt-2.5 mb-2.5 text-[clamp(26px,3vw,38px)] text-white">
                     Order a chef for your table.

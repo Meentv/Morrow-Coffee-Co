@@ -81,7 +81,10 @@ export function MobileNav({
       aria-label="Mobile"
       hidden={!open}
       className={cn(
-        "absolute inset-x-0 top-[calc(var(--header-h)-6px)] rounded-2xl border border-line bg-cream p-2 shadow-card",
+        // Glass: the panel floats over live page content, so translucency reads
+        // as depth. glass-light carries its own solid fallback for browsers
+        // without backdrop-filter, so contrast never depends on the blur.
+        "absolute inset-x-0 top-[calc(var(--header-h)-6px)] rounded-2xl p-2 shadow-card glass-light",
         open ? "block" : "hidden",
       )}
     >

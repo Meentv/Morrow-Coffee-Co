@@ -22,10 +22,12 @@ beforeEach(() => {
 describe("every route mounts and renders its content", () => {
   it("/ — home", async () => {
     renderAt("/");
-    expect(await screen.findByRole("heading", { level: 1, name: /Good mornings/i })).toBeVisible();
+    expect(await screen.findByRole("heading", { level: 1, name: /A better kind/i })).toBeVisible();
     expect(screen.getByRole("heading", { name: /Made for/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /keeps coming back/i })).toBeInTheDocument();
-    expect(screen.getByLabelText("Email address")).toBeInTheDocument();
+    // The homepage now has two newsletter placements — the in-page panel and the
+    // gooey footer — so assert both exist rather than assuming a single field.
+    expect(screen.getAllByLabelText("Email address").length).toBeGreaterThanOrEqual(2);
   });
 
   it("/menu — menu", async () => {

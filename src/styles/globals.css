@@ -37,6 +37,12 @@
   --color-success: #2f7a4e;
   --color-danger: #a2352b;
   --color-cream-70: rgba(255, 250, 243, 0.7);
+  /**
+   * Danger on a DARK ground. --color-danger (#a2352b) is tuned for cream paper
+   * and is only ~2.1:1 on espresso-deep, so error text in the footer would fail
+   * AA. This is the same hue lifted until it clears 4.5:1 on espresso-deep.
+   */
+  --color-danger-soft: #f0a99c;
   --color-cream-60: rgba(255, 250, 243, 0.6);
 
   /* --- Radii --- */
@@ -281,4 +287,141 @@
 /* Hairline rule that reads as printed, not as a UI border. */
 @utility rule-hair {
   border-top: 1px solid var(--color-line);
+}
+
+/* =========================================================
+   Liquid glass layer — 2026 redesign
+   ---------------------------------------------------------
+   Glass is ADDITIVE, not a repaint. The paper/cream editorial
+   system stays the foundation; glass is for floating UI only
+   (nav, cart drawer, modals, toasts) and for panels that sit
+   ON photography. Never for body copy on a light ground —
+   coffee is tactile, and a transparent reading surface is a
+   legibility tax with no visual payoff.
+
+   Espresso/roasted-brown below are the brief's palette,
+   reconciled with the existing tokens: --color-espresso stays
+   the warm #2a1c15 used everywhere, and --color-espresso-deep
+   is the brief's #17110E for full-bleed cinematic stages where
+   maximum depth is wanted.
+   ========================================================= */
+@theme {
+  --color-espresso-deep: #17110e;
+  --color-roasted: #34221b;
+  --color-oat: #e8d8bd;
+  --color-caramel: #b88a55;
+  --color-ivory: #f6f0e7;
+
+  /* Glass surfaces. Two variants because glass over a photo needs
+     more opacity than glass over cream to keep text readable. */
+  --glass-blur: 22px;
+  --glass-saturate: 140%;
+}
+
+@utility glass {
+  background: rgba(255, 255, 255, 0.075);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Glass that sits on light grounds — cream-tinted instead of white,
+   with a darker hairline so the edge is visible on paper. */
+@utility glass-light {
+  background: rgba(255, 253, 249, 0.72);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(42, 28, 21, 0.1);
+  box-shadow:
+    0 10px 34px -16px rgba(42, 28, 21, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Dark glass for the cinematic hero nav / stage panels. */
+@utility glass-dark {
+  background: rgba(23, 17, 14, 0.34);
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+  border: 1px solid rgba(255, 250, 243, 0.16);
+  box-shadow:
+    0 14px 44px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 250, 243, 0.12);
+}
+
+/* Browsers without backdrop-filter (or with it disabled) get a solid
+   surface instead of unreadable text over a photo. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: rgba(23, 17, 14, 0.88);
+  }
+  .glass-dark {
+    background: rgba(23, 17, 14, 0.9);
+  }
+  .glass-light {
+    background: rgba(255, 253, 249, 0.97);
+  }
+}
+
+/* ---------- Gooey footer bubbles ----------
+   Adapted from Zed Dash's "CSS Gooey footer" (MIT, 2019) as supplied in the
+   Sodaworks reference. The goo is an SVG filter: blur the circles, then push
+   alpha through a steep colour matrix so the blurred edges snap into a single
+   merged silhouette. The matrix values come from that reference and are tuned
+   here for a warm footer rather than electric blue. */
+@utility goo-bubbles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1rem;
+  background: var(--goo-color, var(--color-espresso-deep));
+  filter: url("#morrow-blob");
+  /* Clip AFTER the filter so bubbles only show above the edge — otherwise the
+     blurred ring leaks a faint halo inside the footer. */
+  clip-path: inset(-16rem 0 0 0);
+  pointer-events: none;
+}
+
+@keyframes hero-cue {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(300%);
+    opacity: 0;
+  }
+}
+
+@keyframes morrow-bubble-size {
+  0%,
+  75% {
+    width: var(--bubble-size);
+    height: var(--bubble-size);
+  }
+  100% {
+    width: 0;
+    height: 0;
+  }
+}
+
+@keyframes morrow-bubble-move {
+  0% {
+    bottom: -4rem;
+  }
+  100% {
+    bottom: var(--bubble-distance);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .morrow-bubble {
+    animation-play-state: paused !important;
+  }
 }

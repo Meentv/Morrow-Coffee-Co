@@ -27,6 +27,7 @@ byte-for-byte in [`legacy/vanilla/`](./legacy/vanilla) for reference.
 - **Order** — checkout with pickup/delivery rules and a validated submission payload
 - **Kitchen** — private-chef enquiry (coffee bar, breakfast table, full evening)
 - **Enquire** — contact form, visit details, FAQ accordion
+- **Hero** — the supplied coffee-journey film, re-cut to loop seamlessly, 22.8 MB → 0.98 MB on mobile
 - **Email** — every form really sends, via EmailJS, with a `reply_to` that reaches the customer
 - **Newsletter** — validated subscription with loading/success/error states
 
@@ -131,22 +132,25 @@ legacy/vanilla/           the untouched original site
 
 ## 5. Feature list
 
-| Area       | Detail                                                                                                                                                                                                          |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Routing    | 6 routes + 404, all lazy-loaded via `React.lazy` + `Suspense`                                                                                                                                                   |
-| Shop       | 6 coffees × 3 bag sizes × 5 grinds; variant price + price-per-100g computed from integer cents; roast filter with `aria-pressed`; variant identity in the basket id so the same bean at two grinds is two lines |
-| Email      | EmailJS transport, one template for all five forms, `reply_to` wired from each form, rate-limit and misconfiguration surfaced distinctly, never a fake success                                                  |
-| Menu       | Typed data, category filter (`aria-pressed`), search over name/description/category, `?cat=` and `?q=` URL state, empty state with reset, result counter, `/` keyboard shortcut for search                      |
-| Cart       | Add/remove/increment/decrement, integer cents, `localStorage` persistence under the **original** `morrow-cart` key with legacy migration, cross-tab sync, 99-per-line / 50-line caps                            |
-| Order      | Empty-cart block, delivery-address rule, full line-item payload (ids, quantities, unit + line totals, currency), double-submit guard, basket cleared only on success                                            |
-| Kitchen    | 5-field private-chef enquiry, email-or-phone union validation                                                                                                                                                   |
-| Contact    | Enquiry form, phone/email links, 4-item FAQ                                                                                                                                                                     |
-| FAQ        | `aria-expanded`/`aria-controls`, measured-height animation, keyboard operable                                                                                                                                   |
-| Newsletter | Zod email validation, loading/success/error, honest demo notice                                                                                                                                                 |
-| Toasts     | success/error/info, deduped, capped stack, auto-dismiss, dismiss button, single `aria-live="polite"` region                                                                                                     |
-| Forms      | Floating-label fields with a persistent real `<label>`, 48px touch targets, 16px mobile text, inline errors with icons, segmented radio groups, `aria-invalid` + `role="alert"`                                 |
-| A11y       | Skip link, landmarks, one `h1`/page, 4.5:1 text contrast, visible focus rings, labelled fields, modal focus trap + restore, reduced-motion support                                                              |
-| SEO        | Per-route title/description/OG/Twitter, `noindex` on 404, canonical only when a real origin is configured                                                                                                       |
+| Area       | Detail                                                                                                                                                                                                                                             |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Routing    | 6 routes + 404, all lazy-loaded via `React.lazy` + `Suspense`                                                                                                                                                                                      |
+| Shop       | 6 coffees × 3 bag sizes × 5 grinds; variant price + price-per-100g computed from integer cents; roast filter with `aria-pressed`; variant identity in the basket id so the same bean at two grinds is two lines                                    |
+| Email      | EmailJS transport, one template for all five forms, `reply_to` wired from each form, rate-limit and misconfiguration surfaced distinctly, never a fake success                                                                                     |
+| Menu       | Typed data, category filter (`aria-pressed`), search over name/description/category, `?cat=` and `?q=` URL state, empty state with reset, result counter, `/` keyboard shortcut for search                                                         |
+| Cart       | Add/remove/increment/decrement, integer cents, `localStorage` persistence under the **original** `morrow-cart` key with legacy migration, cross-tab sync, 99-per-line / 50-line caps                                                               |
+| Order      | Empty-cart block, delivery-address rule, full line-item payload (ids, quantities, unit + line totals, currency), double-submit guard, basket cleared only on success                                                                               |
+| Kitchen    | 5-field private-chef enquiry, email-or-phone union validation                                                                                                                                                                                      |
+| Contact    | Enquiry form, phone/email links, 4-item FAQ                                                                                                                                                                                                        |
+| FAQ        | `aria-expanded`/`aria-controls`, measured-height animation, keyboard operable                                                                                                                                                                      |
+| Newsletter | Zod email validation, loading/success/error, honest demo notice                                                                                                                                                                                    |
+| Toasts     | success/error/info, deduped, capped stack, auto-dismiss, dismiss button, single `aria-live="polite"` region                                                                                                                                        |
+| Hero video | Seamless 6.88 s loop built by crossfading the source's tail into its head; H.264 + VP9 resolution ladder so phones fetch 0.98 MB rather than 3.4 MB; poster-only for reduced-motion, data-saver and 2 g connections; pauses when the tab is hidden |
+| Footer     | Gooey bubble animation via SVG `feGaussianBlur` + `feColorMatrix` (no JS animation loop), oversized display headline, real newsletter form, four-column directory, and a WCAG 2.2.2 Pause/Play control that defaults to the OS motion preference   |
+| Glass      | Three tokenised surfaces (`glass`, `glass-light`, `glass-dark`) reserved for floating UI and panels over photography, each with a solid `@supports` fallback so contrast never depends on `backdrop-filter`                                        |
+| Forms      | Floating-label fields with a persistent real `<label>`, 48px touch targets, 16px mobile text, inline errors with icons, segmented radio groups, `aria-invalid` + `role="alert"`                                                                    |
+| A11y       | Skip link, landmarks, one `h1`/page, 4.5:1 text contrast, visible focus rings, labelled fields, modal focus trap + restore, reduced-motion support                                                                                                 |
+| SEO        | Per-route title/description/OG/Twitter, `noindex` on 404, canonical only when a real origin is configured                                                                                                                                          |
 
 ---
 
@@ -319,6 +323,9 @@ See the delivery report for the full list. In short:
 - [`docs/MIGRATION.md`](./docs/MIGRATION.md) — page/section/component mapping, every
   original interaction, all 26 documented changes and bug fixes, and the token
   translation table.
+- [`docs/VIDEO_SETUP.md`](./docs/VIDEO_SETUP.md) — the hero encode: why the source
+  wasn't web-ready, how the loop seam was closed, the exact `ffmpeg` commands,
+  and the honest limits of a 1664-wide master.
 - [`docs/EMAIL_SETUP.md`](./docs/EMAIL_SETUP.md) — connecting real email in 5 minutes,
   including the template body and every variable it receives.
 - [`docs/IMAGE_AUDIT.md`](./docs/IMAGE_AUDIT.md) — the 23 delivered files with true
