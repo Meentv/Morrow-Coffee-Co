@@ -1,8 +1,8 @@
 # Hero video — encode pipeline
 
 The current master is `873909502718799330.mov` (736×414, 16:9, 25.65s, 2.5 MB),
-supplied at the repo root. Like every master it is **not served** — the files the
-site delivers live in `public/media/`. Masters belong in `assets/source/`, which
+supplied at the repo root and since moved to `assets/source/`. Like every master it
+is **not served** — the files the site delivers live in `public/media/`. Masters belong in `assets/source/`, which
 `npm run build` enforces via `scripts/check-public-size.mjs`.
 
 > The previous 1664×1248 clip was replaced by this one on request. Its encode

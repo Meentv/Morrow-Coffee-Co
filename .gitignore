@@ -1,9 +1,17 @@
+# ---------------------------------------------------------------------------
+# Morrow Coffee Co. — ignored paths
+#
+# Ignoring a path only affects files that are *not already tracked*. If
+# something here is already in the repo, `git rm --cached <path>` it once.
+# ---------------------------------------------------------------------------
+
 # Dependencies
 node_modules/
 
 # Build output
 dist/
 dist-ssr/
+*.local.html
 
 # Test artefacts
 coverage/
@@ -11,23 +19,66 @@ playwright-report/
 test-results/
 blob-report/
 .playwright/
+.vitest/
 
-# Environment
+# Environment — never commit real values
 .env
 .env.local
 .env.*.local
 
 # Editor / OS
 .DS_Store
+.DS_Store?
+._*
+Thumbs.db
+desktop.ini
 .idea/
 .vscode/*
 !.vscode/extensions.json
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # Misc
 .cache/
 .temp/
+tmp/
 
 # TypeScript incremental build info
 *.tsbuildinfo
+
+# ---------------------------------------------------------------------------
+# Large media
+#
+# Source masters are large and are not needed to build or run the site — the
+# optimised files in `public/media/` are what ships. Keeping masters out of Git
+# keeps clones and deploys small; `assets/source/` is the documented home for a
+# master when one genuinely must be versioned (see docs/VIDEO_SETUP.md).
+#
+# Raw camera/export dumps and phone recordings:
+*.mov
+*.avi
+*.mkv
+*.wmv
+*.flv
+*.m4v
+*.psd
+*.ai
+*.indd
+
+# ...except anything deliberately banked as a source master:
+!assets/source/*.mov
+!assets/source/*.mp4
+
+# Phone-sync junk that shows up when uploading from iOS
+IMG_[0-9]*.HEIC
+IMG_[0-9]*.heic
+*.HEIC
+*.heic
+
+# A heavily-compressed duplicate of a delivered file is almost always an
+# accident; the encode ladder in public/media/ is the reviewed set.
+public/images/*.mp4
+public/images/*.webm
