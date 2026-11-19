@@ -62,20 +62,21 @@ describe("video hero", () => {
     const { container } = renderHero();
 
     const sources = Array.from(container.querySelectorAll("video source"));
-    expect(sources.length).toBeGreaterThanOrEqual(4);
+    expect(sources).toHaveLength(2);
 
-    // Every non-final source must be gated by a media query. If the 854 and 1280
-    // entries lost their `media` attribute, a phone would fetch all of them.
+    // Every source except the fallback must be gated by a media query, or a
+    // phone would fetch the large file as well as its own.
     const finalSource = sources[sources.length - 1];
     for (const source of sources.slice(0, -1)) {
       expect(source.getAttribute("media")).toBeTruthy();
     }
-    expect(finalSource?.getAttribute("src")).toBe("/media/hero-1920.mp4");
+    expect(finalSource?.getAttribute("src")).toBe("/media/hero-736.mp4");
+    expect(finalSource?.hasAttribute("media")).toBe(false);
 
-    // WebM is offered before MP4 at each breakpoint — it's ~15% smaller here.
-    const phoneSources = sources.filter((s) => s.getAttribute("media") === "(max-width: 700px)");
-    expect(phoneSources[0]?.getAttribute("type")).toBe("video/webm");
-    expect(phoneSources[0]?.getAttribute("src")).toBe("/media/hero-854.webm");
+    // Phones get the small rung. The source is only 736px wide, so there is no
+    // larger rung to fall back to — upscaling would add bytes and no detail.
+    const phone = sources.find((s) => s.getAttribute("media") === "(max-width: 700px)");
+    expect(phone?.getAttribute("src")).toBe("/media/hero-480.mp4");
 
     // Nothing is preloaded eagerly: the poster is the first paint.
     expect(container.querySelector("video")?.getAttribute("preload")).toBe("metadata");
@@ -91,7 +92,7 @@ describe("video hero", () => {
 
     const poster = container.querySelector("img");
     expect(poster).not.toBeNull();
-    expect(poster?.getAttribute("src")).toBe("/media/hero-poster-1280.jpg");
+    expect(poster?.getAttribute("src")).toBe("/media/hero-poster-736.jpg");
     expect(poster?.getAttribute("fetchpriority")).toBe("high");
   });
 

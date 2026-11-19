@@ -78,6 +78,22 @@ Then add the same three variables in your host's dashboard:
 
 Redeploy. `isDemoMode()` now returns `false`, and the forms send for real.
 
+## 4b. Where the email lands
+
+The template's **To email** field is what actually decides the recipient, and it
+is set in the EmailJS dashboard — not in this repo. Set it to:
+
+```
+alameenahmed588@gmail.com
+```
+
+Separately, every submission now also sends a `{{to_email}}` variable carrying the
+same address (from `VITE_CONTACT_EMAIL`, defaulting to
+`DEFAULT_TO_EMAIL` in `src/services/form.service.ts`). If you'd rather keep the
+address in one place, point the dashboard's To field at `{{to_email}}` and change
+it here instead. **If the two disagree, the dashboard wins** — that is EmailJS's
+behaviour, not a bug.
+
 ## 5. Variables the template receives
 
 Flat and stable, so the template above keeps working as forms change:

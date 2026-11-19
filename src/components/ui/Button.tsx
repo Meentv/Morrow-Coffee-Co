@@ -9,9 +9,20 @@ import { cn } from "@/lib/utils";
  * The single button primitive. Renders a <button>, a router <a>, or an external
  * <a> depending on props — so the visual treatment never has to be duplicated,
  * and we never ship a <button> that pretends to be a link (or vice versa).
+ *
+ * ── ON OVERRIDING COLOURS VIA className ─────────────────────────────────────
+ * `cn` concatenates; it does not resolve Tailwind conflicts. So passing
+ * `className="bg-cream text-espresso"` to a `primary` button used to emit
+ * `bg-espresso text-cream bg-cream text-espresso` and leave it to stylesheet
+ * order. In the hero that produced **espresso text on an espresso fill** — a
+ * visible button with no readable label, which is exactly what was reported.
+ *
+ * The `onDark` variant exists so that case has a supported answer instead of a
+ * fragile override. If you need a colour that isn't here, add a variant rather
+ * than a className.
  */
 
-export type ButtonVariant = "primary" | "secondary" | "soft" | "gold";
+export type ButtonVariant = "primary" | "secondary" | "soft" | "gold" | "onDark";
 export type ButtonSize = "sm" | "md" | "lg";
 
 const BASE =
@@ -22,6 +33,8 @@ const VARIANTS: Record<ButtonVariant, string> = {
   secondary: "bg-cream text-espresso border-line hover:bg-cream-2",
   soft: "bg-espresso/7 text-espresso hover:bg-espresso/13",
   gold: "bg-gold text-espresso hover:bg-cream",
+  /** For use on photography or the espresso ground, where a cream fill reads best. */
+  onDark: "bg-cream text-espresso hover:bg-gold hover:text-espresso",
 };
 
 const SIZES: Record<ButtonSize, string> = {

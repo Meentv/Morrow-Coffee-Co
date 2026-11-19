@@ -10,23 +10,29 @@ import { cn } from "@/lib/utils";
  * Cinematic video hero.
  *
  * ── About the footage ───────────────────────────────────────────────────────
- * The supplied clip (1664×1248, 8.06s, 22.8 MB) is genuinely beautiful but was
- * never web-ready, and it had a hard loop seam: it opens pouring coffee into a
- * cup and ends on a hillside plantation, so `loop` snapped from the plantation
- * back to the pour and read as a glitch.
+ * The current clip is `873909502718799330.mov`: 736×414, 16:9, 25.65s, and it
+ * tells a full bean-to-cup story — beans → grinder → pour → crema → steam →
+ * a person enjoying the cup.
  *
- * Two fixes, both applied to the file itself rather than papered over in CSS:
+ * Two problems, both fixed in the file rather than papered over in CSS:
  *
- * 1. **Re-timed for a seamless loop.** The clip is rebuilt from 1.2s→8.06s and
- *    then crossfades the tail (6.86s→8.06s) into the head (0s→1.2s). The result
- *    starts and ends on the *same* frame, so `loop` is invisible. 6.88s long.
- * 2. **Encoded as a ladder.** 22.8 MB → a 0.98 MB mobile file. Delivery is
- *    WebM first (VP9, ~15% smaller here), then H.264 for Safari, and the phone
- *    never downloads the 1920 version.
+ * 1. **Hard loop seam.** The clip opens on a coffee-bean macro and ends on a
+ *    person's face, so `loop` snapped face → beans and read as a glitch.
+ *    Rebuilt from 1.2s→25.65s with the tail crossfaded into the head, so the
+ *    output starts and ends on the *same* frame. 24.47s.
+ * 2. **Source is only 736px wide.** Upscaling it to 1280 or 1920 would invent
+ *    pixels and add bytes for nothing, so the ladder tops out at the native
+ *    size: 480 for phones, 736 for everything else.
  *
- * `hero-1920.mp4` is deliberately NOT preloaded and NOT the default source — a
- * phone that fetches it wastes ~3.4 MB on a screen that can't resolve it. The
- * `<source media>` ladder means the browser only ever fetches one file.
+ * Delivery is H.264 only. VP9 was tried and came out *larger* than x264 at this
+ * size and duration, so shipping a second codec would have doubled the encode
+ * time and the repo for no gain. Two sources, one rung each side of 700px.
+ *
+ * ── Known limitation, stated plainly ────────────────────────────────────────
+ * At 736px wide this footage is soft on a large desktop screen, where the hero
+ * renders well over 1000px. It reads as film grain rather than blur at this
+ * contrast, so it holds up — but **a 1920+ export would visibly improve it**,
+ * and this ladder would then gain a rung. See docs/VIDEO_SETUP.md.
  *
  * ── Behaviour ───────────────────────────────────────────────────────────────
  * - Autoplay, muted, loop, playsInline. Muted is what makes autoplay legal in
@@ -40,7 +46,7 @@ import { cn } from "@/lib/utils";
  *   the poster and the hero is still complete and readable.
  */
 
-const POSTER = "/media/hero-poster-1280.jpg";
+const POSTER = "/media/hero-poster-736.jpg";
 
 /**
  * Data-saver and very slow connections get the poster, not the video.
@@ -126,21 +132,16 @@ export function VideoHero() {
             tabIndex={-1}
             disablePictureInPicture
           >
-            {/* Phone first. 854 is plenty for a portrait phone at DPR 2 once
-                object-cover crops to the middle third of a 4:3 frame. */}
-            <source src="/media/hero-854.webm" type="video/webm" media="(max-width: 700px)" />
-            <source src="/media/hero-854.mp4" type="video/mp4" media="(max-width: 700px)" />
-            <source src="/media/hero-1280.webm" type="video/webm" media="(max-width: 1500px)" />
-            <source src="/media/hero-1280.mp4" type="video/mp4" media="(max-width: 1500px)" />
-            <source src="/media/hero-1920.mp4" type="video/mp4" />
+            <source src="/media/hero-480.mp4" type="video/mp4" media="(max-width: 700px)" />
+            <source src="/media/hero-736.mp4" type="video/mp4" />
           </video>
         ) : (
           /* Reduced motion, or the one frame before we know the pref: a still. */
           <img
             src={POSTER}
             alt=""
-            width={1280}
-            height={960}
+            width={736}
+            height={414}
             fetchPriority="high"
             decoding="async"
             className="size-full object-cover"
@@ -185,12 +186,10 @@ export function VideoHero() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Button
-              to="/menu"
-              size="lg"
-              className="bg-cream text-espresso hover:bg-gold"
-              trailing="→"
-            >
+            {/* `onDark`, not a className override — see the note in Button.tsx
+                about why overriding variant colours produced an unlabelled
+                button here. */}
+            <Button to="/menu" size="lg" variant="onDark" trailing="→">
               Explore our menu
             </Button>
             <Link

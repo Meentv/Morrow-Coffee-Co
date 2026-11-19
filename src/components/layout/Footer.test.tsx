@@ -114,15 +114,32 @@ describe("footer", () => {
     );
   });
 
-  it("keeps the newsletter honest about demo mode", () => {
+  it("keeps the newsletter honest without a permanent demo caption", () => {
     setReducedMotion(false);
     renderFooter();
 
-    // No EmailJS keys are configured in the test environment, so the form must
-    // say so rather than implying a list was joined.
     expect(screen.getByRole("textbox", { name: /email address/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /join the letter/i })).toBeInTheDocument();
-    expect(screen.getByText(/demo — no mailing list connected/i)).toBeInTheDocument();
+
+    // The form must NOT carry a standing "demo mode" apology underneath it —
+    // that was removed on request, and a permanent disclaimer under a working
+    // form is noise. The honesty requirement is that we never *claim* a send
+    // that didn't happen, which the success state handles instead:
+    expect(screen.queryByText(/demo/i)).toBeNull();
+  });
+
+  it("still refuses to claim a signup succeeded when no mail is configured", async () => {
+    setReducedMotion(false);
+    const user = userEvent.setup();
+    renderFooter();
+
+    // No EmailJS keys in the test env, so this is demo mode. Submitting must
+    // produce copy that admits nothing was sent.
+    await user.type(screen.getByRole("textbox", { name: /email address/i }), "ada@example.com");
+    await user.click(screen.getByRole("button", { name: /join the letter/i }));
+
+    const live = await screen.findByRole("status");
+    expect(live.textContent).toMatch(/nothing was sent/i);
   });
 
   it("exposes every directory column as a landmark with a heading", () => {

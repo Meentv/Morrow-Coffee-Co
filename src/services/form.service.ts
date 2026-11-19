@@ -35,6 +35,15 @@ import type { SubmissionResult } from "@/types/api";
 
 export type FormKind = "order" | "kitchen" | "contact" | "newsletter" | "bean-order";
 
+/**
+ * Fallback notification address when VITE_CONTACT_EMAIL is not set.
+ *
+ * This is the address the business asked submissions to go to. It is a default,
+ * not a secret: it appears in the footer as a mailto: link anyway. Override it
+ * with VITE_CONTACT_EMAIL without touching code.
+ */
+export const DEFAULT_TO_EMAIL = "alameenahmed588@gmail.com";
+
 export type SubmitOptions = {
   /** Abort a request when the component unmounts (demo mode only). */
   signal?: AbortSignal;
@@ -51,6 +60,17 @@ type EmailJsConfig = {
   serviceId: string;
   templateId: string;
   publicKey: string;
+  /**
+   * Where the notification lands.
+   *
+   * EmailJS's own template has a "To email" setting in the dashboard, so this is
+   * not strictly required — but it is passed as `to_email` on every submission
+   * so the template can interpolate `{{to_email}}` and the address lives in one
+   * reviewable place in the repo rather than only inside a dashboard nobody can
+   * diff. If the dashboard lists a different address, the dashboard wins; see
+   * docs/EMAIL_SETUP.md.
+   */
+  toEmail: string;
 };
 
 function readConfig(): EmailJsConfig | null {
@@ -60,7 +80,14 @@ function readConfig(): EmailJsConfig | null {
   const publicKey = (env.VITE_EMAILJS_PUBLIC_KEY as string | undefined)?.trim();
 
   if (!serviceId || !templateId || !publicKey) return null;
-  return { serviceId, templateId, publicKey };
+
+  const toEmail = (env.VITE_CONTACT_EMAIL as string | undefined)?.trim();
+  return {
+    serviceId,
+    templateId,
+    publicKey,
+    toEmail: toEmail || DEFAULT_TO_EMAIL,
+  };
 }
 
 const REFERENCE_PREFIX: Record<FormKind, string> = {
@@ -90,6 +117,7 @@ function toTemplateParams(
   payload: Record<string, unknown>,
   reference: string,
   options: SubmitOptions,
+  toEmail: string,
 ): Record<string, string> {
   const params: Record<string, string> = {
     form_type: kind,
@@ -99,6 +127,10 @@ function toTemplateParams(
     page_url: typeof window !== "undefined" ? window.location.href : "",
     reply_to: options.replyTo ?? "",
     reply_name: options.replyName ?? "",
+    /** Available to the template as {{to_email}}. */
+    to_email: toEmail,
+    /** Convenience: a prefilled subject the template can use directly. */
+    subject: `${FORM_LABELS[kind]}${options.replyName ? ` — ${options.replyName}` : ""} (${reference})`,
   };
 
   for (const [key, value] of Object.entries(payload)) {
@@ -166,7 +198,7 @@ async function liveSubmit(
     await emailjs.send(
       config.serviceId,
       config.templateId,
-      toTemplateParams(kind, payload, reference, options),
+      toTemplateParams(kind, payload, reference, options, config.toEmail),
       { publicKey: config.publicKey },
     );
 
