@@ -159,3 +159,45 @@ describe("form.service — live mode (EmailJS configured)", () => {
     }
   });
 });
+
+describe("notification recipient", () => {
+  afterEach(() => vi.unstubAllEnvs());
+
+  it("defaults to the address the business asked for", async () => {
+    const loaded = await loadService({ ...KEYS, VITE_CONTACT_EMAIL: "" });
+    sendMock.mockClear();
+    sendMock.mockResolvedValue({ status: 200, text: "OK" });
+
+    const result = await loaded.mod.submitForm("contact", { name: "Ada", message: "Hi" });
+    expect(result.ok).toBe(true);
+
+    const params = sendMock.mock.calls[0]?.[2] as Record<string, string>;
+    // Passed as a template variable so the address is reviewable in the repo
+    // rather than living only inside the EmailJS dashboard.
+    expect(params.to_email).toBe("alameenahmed588@gmail.com");
+  });
+
+  it("lets VITE_CONTACT_EMAIL override it", async () => {
+    const loaded = await loadService({ ...KEYS, VITE_CONTACT_EMAIL: "orders@morrow.example" });
+    sendMock.mockClear();
+    sendMock.mockResolvedValue({ status: 200, text: "OK" });
+
+    await loaded.mod.submitForm("contact", { name: "Ada", message: "Hi" });
+
+    const params = sendMock.mock.calls[0]?.[2] as Record<string, string>;
+    expect(params.to_email).toBe("orders@morrow.example");
+  });
+
+  it("includes a prefilled subject a bare template can use", async () => {
+    const loaded = await loadService(KEYS);
+    sendMock.mockClear();
+    sendMock.mockResolvedValue({ status: 200, text: "OK" });
+
+    await loaded.mod.submitForm("kitchen", { name: "Ada", message: "Hi" }, { replyName: "Ada" });
+
+    const params = sendMock.mock.calls[0]?.[2] as Record<string, string>;
+    expect(params.subject).toMatch(/Kitchen enquiry/);
+    expect(params.subject).toMatch(/Ada/);
+    expect(params.subject).toMatch(/KIT-/);
+  });
+});

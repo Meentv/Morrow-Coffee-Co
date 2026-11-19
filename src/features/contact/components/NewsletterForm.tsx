@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { newsletterSchema, type NewsletterValues } from "../schemas/newsletter.schema";
-import { submitForm, isDemoMode } from "@/services/form.service";
+import { submitForm } from "@/services/form.service";
 import { toast } from "@/components/feedback/toast.store";
 import type { SubmissionReceipt } from "@/types/api";
 import { cn } from "@/lib/utils";
@@ -144,9 +144,7 @@ export function NewsletterForm({ variant = "panel" }: { variant?: "panel" | "foo
             ? errors.email.message
             : failure
               ? failure
-              : isDemoMode()
-                ? "No flat news. Leave whenever you like. (Demo — no mailing list connected.)"
-                : "No flat news. Leave whenever you like."}
+              : "No flat news. Leave whenever you like."}
         </p>
       </form>
     );
@@ -200,11 +198,12 @@ export function NewsletterForm({ variant = "panel" }: { variant?: "panel" | "foo
         </p>
       ) : null}
 
-      {isDemoMode() ? (
-        <p className="mt-2.5 text-[10.5px] text-cream/60">
-          Demo — no mailing list is connected yet.
-        </p>
-      ) : null}
+      {/*
+        No permanent "demo mode" caption. The honesty rule is that we never
+        *claim* a send that didn't happen — which the success state still
+        handles: in demo mode the receipt says plainly that nothing was sent.
+        A working form shouldn't carry an apology underneath it at all times.
+      */}
     </form>
   );
 }
